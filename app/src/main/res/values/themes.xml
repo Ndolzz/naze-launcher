@@ -1,0 +1,13 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Theme.NazeLauncher" parent="android:Theme.Material.Light.NoActionBar" />
+
+    <!-- Home screen draws its own full-bleed background via Compose, so give it a
+         translucent status bar / edge-to-edge friendly base theme. -->
+    <style name="Theme.NazeLauncher.Home" parent="Theme.NazeLauncher">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
+    </style>
+</resources>
