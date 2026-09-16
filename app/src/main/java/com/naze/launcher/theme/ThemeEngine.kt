@@ -6,18 +6,23 @@ import com.naze.launcher.weather.TemperatureBand
 import com.naze.launcher.weather.WeatherCondition
 
 /**
- * A resolved ambience: a small, deliberately restrained palette (not a full Material
- * scheme swap) so the launcher always reads as "premium OS surface", never "reskinned
- * per weather like a game". Every input degrades gracefully:
- *   - dynamicWeather off  -> always use a NEUTRAL condition contribution
- *   - dynamicTemperature off -> always NORMAL band
- *   - dynamicTime off -> always AFTERNOON-equivalent neutrality
+ * A resolved ambience: a deliberately restrained palette (not a full Material scheme
+ * swap) so the launcher always reads as a premium OS surface, never a reskinned game.
+ *
+ * The Naze identity lives here: deep-blue dark surfaces with an electric-blue /
+ * blue-purple accent. Every input degrades gracefully:
+ *   - dynamicWeather off      -> neutral condition contribution
+ *   - dynamicTemperature off  -> NORMAL band
+ *   - dynamicTime off         -> AFTERNOON-equivalent neutrality
+ *   - ThemeMode.DARK / LIGHT  -> overrides the time-of-day base entirely
  */
 data class Ambience(
     val backgroundTop: Color,
     val backgroundBottom: Color,
+    val surface: Color,
     val onBackground: Color,
     val accent: Color,
+    val accentSoft: Color,
     val isDark: Boolean
 )
 
@@ -29,54 +34,66 @@ object ThemeEngine {
         temperatureBand: TemperatureBand,
         dynamicWeatherEnabled: Boolean,
         dynamicTemperatureEnabled: Boolean,
-        dynamicTimeEnabled: Boolean
+        dynamicTimeEnabled: Boolean,
+        themeMode: ThemeMode = ThemeMode.SYSTEM
     ): Ambience {
-        val effectiveTime = if (dynamicTimeEnabled) timeOfDay else TimeOfDay.AFTERNOON
+        val effectiveTime = when (themeMode) {
+            ThemeMode.DARK -> TimeOfDay.NIGHT
+            ThemeMode.LIGHT -> TimeOfDay.AFTERNOON
+            ThemeMode.SYSTEM -> if (dynamicTimeEnabled) timeOfDay else TimeOfDay.AFTERNOON
+        }
         val effectiveCondition = if (dynamicWeatherEnabled) condition else WeatherCondition.UNKNOWN
         val effectiveBand = if (dynamicTemperatureEnabled) temperatureBand else TemperatureBand.NORMAL
 
         val base = baseForTime(effectiveTime)
         val weatherAdjusted = applyWeather(base, effectiveCondition)
-        val finalAmbience = applyTemperature(weatherAdjusted, effectiveBand)
-
-        return finalAmbience
+        return applyTemperature(weatherAdjusted, effectiveBand)
     }
 
-    private fun baseForTime(time: TimeOfDay): Ambience = when (time) {
-        TimeOfDay.MORNING -> Ambience(
-            backgroundTop = Color(0xFFFFE9D6),
-            backgroundBottom = Color(0xFFFFF6EC),
-            onBackground = Color(0xFF2B2118),
-            accent = Color(0xFFFF9D4D),
-            isDark = false
-        )
-        TimeOfDay.AFTERNOON -> Ambience(
-            backgroundTop = Color(0xFFEAF3FF),
-            backgroundBottom = Color(0xFFF7FAFF),
-            onBackground = Color(0xFF16202B),
-            accent = Color(0xFF3E8BFF),
-            isDark = false
-        )
-        TimeOfDay.EVENING -> Ambience(
-            backgroundTop = Color(0xFFFFDCC2),
-            backgroundBottom = Color(0xFF3B3050),
-            onBackground = Color(0xFF1C1626),
-            accent = Color(0xFFFF7A59),
-            isDark = false
-        )
-        TimeOfDay.NIGHT -> Ambience(
-            backgroundTop = Color(0xFF0E1420),
-            backgroundBottom = Color(0xFF060A12),
-            onBackground = Color(0xFFEDEFF3),
-            accent = Color(0xFF6E8CFF),
+    private fun darkAmbience(top: Long, bottom: Long, onBg: Long, accent: Long): Ambience =
+        Ambience(
+            backgroundTop = Color(top),
+            backgroundBottom = Color(bottom),
+            surface = Color(0xFF141D33).copy(alpha = 0.72f),
+            onBackground = Color(onBg),
+            accent = Color(accent),
+            accentSoft = Color(accent).copy(alpha = 0.16f),
             isDark = true
+        )
+
+    private fun lightAmbience(top: Long, bottom: Long, onBg: Long, accent: Long): Ambience =
+        Ambience(
+            backgroundTop = Color(top),
+            backgroundBottom = Color(bottom),
+            surface = Color(0xFFFFFFFF).copy(alpha = 0.72f),
+            onBackground = Color(onBg),
+            accent = Color(accent),
+            accentSoft = Color(accent).copy(alpha = 0.12f),
+            isDark = false
+        )
+
+    private fun baseForTime(time: TimeOfDay): Ambience = when (time) {
+        TimeOfDay.MORNING -> lightAmbience(
+            top = 0xFFE9F1FC, bottom = 0xFFFAFCFF, onBg = 0xFF13203A, accent = 0xFF2F7BFF
+        )
+        TimeOfDay.AFTERNOON -> lightAmbience(
+            top = 0xFFE7EFFB, bottom = 0xFFF7FAFF, onBg = 0xFF101B30, accent = 0xFF2E6BFF
+        )
+        // Evening now resolves to the dark family — dusk is when the deep-blue
+        // Naze identity reads best, and it avoids a jarring mid-evening flip.
+        TimeOfDay.EVENING -> darkAmbience(
+            top = 0xFF101430, bottom = 0xFF070510, onBg = 0xFFE9EAF2, accent = 0xFF8B7BFF
+        )
+        TimeOfDay.NIGHT -> darkAmbience(
+            top = 0xFF0B1226, bottom = 0xFF05080F, onBg = 0xFFE8EEF9, accent = 0xFF5B8CFF
         )
     }
 
     private fun applyWeather(base: Ambience, condition: WeatherCondition): Ambience = when (condition) {
         WeatherCondition.CLEAR -> base.copy(
-            backgroundTop = lighten(base.backgroundTop, 0.06f),
-            accent = warm(base.accent)
+            backgroundTop = lighten(base.backgroundTop, 0.05f),
+            accent = warm(base.accent),
+            accentSoft = warm(base.accent).copy(alpha = base.accentSoft.alpha)
         )
         WeatherCondition.CLOUDY -> base.copy(
             backgroundTop = desaturate(base.backgroundTop, 0.85f),
@@ -85,12 +102,14 @@ object ThemeEngine {
         WeatherCondition.RAIN -> base.copy(
             backgroundTop = cool(base.backgroundTop),
             backgroundBottom = cool(base.backgroundBottom),
-            accent = Color(0xFF6FA8DC)
+            accent = Color(0xFF6FA8DC),
+            accentSoft = Color(0xFF6FA8DC).copy(alpha = base.accentSoft.alpha)
         )
         WeatherCondition.STORM -> base.copy(
             backgroundTop = darken(base.backgroundTop, 0.25f),
             backgroundBottom = darken(base.backgroundBottom, 0.35f),
-            onBackground = if (base.isDark) base.onBackground else Color(0xFF20242C),
+            surface = Color(0xFF141D33).copy(alpha = 0.72f),
+            onBackground = if (base.isDark) base.onBackground else Color(0xFFE8EEF9),
             isDark = true
         )
         WeatherCondition.FOG -> base.copy(
@@ -99,7 +118,8 @@ object ThemeEngine {
         )
         WeatherCondition.SNOW -> base.copy(
             backgroundTop = lighten(desaturate(base.backgroundTop, 0.6f), 0.08f),
-            accent = Color(0xFF8FB8FF)
+            accent = Color(0xFF8FB8FF),
+            accentSoft = Color(0xFF8FB8FF).copy(alpha = base.accentSoft.alpha)
         )
         WeatherCondition.UNKNOWN -> base
     }
@@ -111,7 +131,8 @@ object ThemeEngine {
         )
         TemperatureBand.HIGH -> base.copy(
             backgroundTop = warm(base.backgroundTop),
-            accent = warm(base.accent)
+            accent = warm(base.accent),
+            accentSoft = warm(base.accent).copy(alpha = base.accentSoft.alpha)
         )
         TemperatureBand.NORMAL -> base
     }
@@ -138,17 +159,19 @@ object ThemeEngine {
         )
     }
 
-    private fun warm(c: Color): Color = Color(
-        red = (c.red + 0.04f).coerceIn(0f, 1f),
-        green = c.green,
-        blue = (c.blue - 0.03f).coerceIn(0f, 1f),
-        alpha = c.alpha
-    )
+    private fun warm(c: Color): Color =
+        Color(
+            red = (c.red + 0.04f).coerceIn(0f, 1f),
+            green = c.green,
+            blue = (c.blue - 0.03f).coerceIn(0f, 1f),
+            alpha = c.alpha
+        )
 
-    private fun cool(c: Color): Color = Color(
-        red = (c.red - 0.03f).coerceIn(0f, 1f),
-        green = c.green,
-        blue = (c.blue + 0.04f).coerceIn(0f, 1f),
-        alpha = c.alpha
-    )
+    private fun cool(c: Color): Color =
+        Color(
+            red = (c.red - 0.03f).coerceIn(0f, 1f),
+            green = c.green,
+            blue = (c.blue + 0.04f).coerceIn(0f, 1f),
+            alpha = c.alpha
+        )
 }
