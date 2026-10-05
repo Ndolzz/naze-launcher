@@ -22,11 +22,17 @@ jobs:
           java-version: '17'
           cache: 'gradle'
 
+      # ubuntu-latest no longer ships a usable preinstalled Gradle, so install
+      # the exact Gradle version this project targets (AGP 8.5.2 needs 8.x).
+      - name: Set up Gradle 8.7
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.7'
+
       # GitHub's ubuntu-latest runners ship a preinstalled, license-accepted
       # Android SDK that already includes the platform and build-tools this
       # project needs, so we use it directly and only fall back to sdkmanager
-      # when a component is missing. This keeps the build off external SDK
-      # download services that occasionally fail.
+      # when a component is missing.
       - name: Set up Android SDK
         run: |
           echo "ANDROID_HOME=$ANDROID_HOME"
@@ -37,9 +43,8 @@ jobs:
             sdkmanager "platforms;android-34" "build-tools;34.0.0" > /dev/null
           fi
 
-      # This repo doesn't ship a committed Gradle wrapper jar, so we bootstrap one
-      # using the Gradle that's preinstalled on GitHub's ubuntu-latest runners,
-      # pinned to the version this project targets.
+      # This repo doesn't ship a committed Gradle wrapper jar, so we bootstrap
+      # one using the pinned Gradle installed above.
       - name: Generate Gradle wrapper
         run: gradle wrapper --gradle-version 8.7
 
