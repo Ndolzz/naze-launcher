@@ -11,7 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -19,7 +19,6 @@ import com.naze.launcher.theme.LocalNazeUiFont
 import com.naze.launcher.ui.NazeIconButton
 import com.naze.launcher.ui.NazeIcons
 import com.naze.launcher.ui.NazeLoader
-import androidx.compose.ui.graphics.vector.ImageVector
 
 private fun conditionLabel(c: WeatherCondition): String = when (c) {
     WeatherCondition.CLEAR -> "Clear"
@@ -48,7 +47,8 @@ fun WeatherCondition.icon(): ImageVector = when (this) {
  * retry, or points to Settings when an API key is missing.
  */
 @Composable
-fun WeatherSummaryView(
+fun WeatherSu
+mmaryView(
     result: WeatherResult?,
     useFahrenheit: Boolean,
     textColor: Color,

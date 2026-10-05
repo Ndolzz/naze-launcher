@@ -39,8 +39,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.SolidColor
-import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.SolidColorimport
+ androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.pointer.pointerInput
@@ -93,7 +93,8 @@ fun NazeLockScreen(
 ) {
     val ambience = remember {
         ThemeEngine.resolve(
-            TimeOfDay.current(), WeatherCondition.UNKNOWN, TemperatureBand.NORMAL,
+            TimeOfDay.current(), We
+atherCondition.UNKNOWN, TemperatureBand.NORMAL,
             dynamicWeatherEnabled = false, dynamicTemperatureEnabled = false, dynamicTimeEnabled = true
         )
     }
@@ -137,10 +138,8 @@ fun NazeLockScreen(
         }
 
         Column(
-            Modifier.fillMaxSize(
-)
-                .statusBars
-Padding()
+            Modifier.fillMaxSize()
+                .statusBarsPadding()
                 .navigationBarsPadding()
                 .padding(horizontal = 24.dp, vertical = 16.dp)
         ) {
@@ -220,7 +219,8 @@ Padding()
 @Composable
 private fun StackClock(hh: String, mm: String, color: Color, family: FontFamily) {
     val base = TextStyle(
-        fontFamily = family, fontWeight = FontWeight.Medium, fontSize = 148.sp,
+        fontFamily = f
+amily, fontWeight = FontWeight.Medium, fontSize = 148.sp,
         lineHeight = 128.sp, letterSpacing = (-4).sp, fontFeatureSettings = "tnum"
     )
     Column {

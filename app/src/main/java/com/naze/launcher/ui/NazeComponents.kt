@@ -32,7 +32,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.ImageVector
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.TextStyle
@@ -41,8 +41,16 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.naze.
+
+
+
+launcher.theme.LocalNazeUiFont
 import java.util.Locale
 import androidx.compose.animation.core.Spring
+import com.naze.launcher.theme.LocalNazeUiFont
+import androidx.compose.ui.graphics.vector.ImageVector
+import com.naze.launcher.theme.LocalNazeUiFont
 
 /**
  * Shared Naze design-system components. Everything visual in the app is built from
@@ -61,7 +69,7 @@ fun Modifier.pressScale(
         targetValue = if (pressed) pressedScale else 1f,
         animationSpec = androidx.compose.animation.core.spring(
             stiffness = 1400f,
-            dampingRatio = androidx.compose.animation.core.Spring.DampingRatioLowBouncy
+            dampingRatio = androidx.compose.animation.core.Spring.DampingRatioMediumLow
         ),
         label = "pressScale"
     )
@@ -165,7 +173,8 @@ fun NazeLoader(
         animationSpec = infiniteRepeatable(
          
   
- animation = tween(durationMillis = 1100, easing = LinearEasing),
+ animation = tween(durationMi
+llis = 1100, easing = LinearEasing),
             repeatMode = RepeatMode.Restart
         ),
         label = "nazeLoaderPhase"

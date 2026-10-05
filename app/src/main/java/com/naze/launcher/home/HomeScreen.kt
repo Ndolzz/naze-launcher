@@ -40,7 +40,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
+import androidx.compose.u
+i.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
@@ -148,7 +149,7 @@ fun HomeScreen(
     val homeScale by animateFloatAsState(
         targetValue = if (overlay == null) 1f else 0.94f,
         animationSpec = spring(
-            dampingRatio = Spring.DampingRatioLowBouncy,
+            dampingRatio = Spring.DampingRatioMediumLow,
             stiffness = 700f
         ),
         label = "homeScale"
@@ -193,9 +194,7 @@ fun HomeScreen(
         SearchAction(
             title = "Launcher settings",
             subtitle = "Customize Naze",
-            icon = NazeIcons.Setting
-s
-,
+            icon = NazeIcons.Settings,
 
             run = { overlay = null; onOpenSettings() }
 
@@ -398,7 +397,9 @@ visible = sheet != Sheet.NONE,
                     accent = ambience.accent,
                     onDockToggle = {
                         if (app.packageName in settings.dockPackages) {
-                        viewModel.removeFromDock(app)
+                     
+       vi
+ewModel.removeFromDock(app)
                         } else {
                             viewModel.addToDock(app)
                         }
@@ -463,8 +464,7 @@ private fun HomeTopRow(
     }
 }
 
-// ── Search pill ────────────────────
-─────────────────────────────────────────────
+// ── Search pill ──────────────────────────────────────────────
 
 @Composable
 private fun SearchPill(
@@ -597,7 +597,7 @@ private fun QuickActionsContent(
 }
 
 private data class QuickActionTileData(
-    val icon: androidx.compose.ui.graphics.vector.ImageVector,
+    val icon: androidx.compose.ui.graphics.ImageVector,
     val label: String,
     val active: Boolean,
     val onClick: () -> Unit
@@ -765,7 +765,8 @@ private fun AppActionsContent(
 
     SheetActionRow(
         icon = if (inDock) NazeIcons.Minus else NazeIcons.Plus,
-        label = if (inDock) "Remove from dock" else "Pin to dock",
+        label = if (inDock) "Re
+move from dock" else "Pin to dock",
         textColor = textColor,
         accent = accent,
         onClick = onDockToggle
@@ -781,7 +782,7 @@ private fun AppActionsContent(
 
 @Composable
 private fun SheetActionRow(
-    icon: androidx.compose.ui.graphics.vector.ImageVector,
+    icon: androidx.compose.ui.graphics.ImageVector,
     label: String,
     textColor: Color,
     accent: Color,
