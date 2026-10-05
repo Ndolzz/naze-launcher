@@ -137,26 +137,6 @@ fun SettingsScreen(
                             actions.setPerformanceMode(it)
                         }
                     }
-                    Spacer(Modifier.height(10.dp))
-                    SettingsCard(surface) {
-                        ToggleRow(
-                            "Dynamic weather theming",
-                            "Background shifts with conditions",
-                            settings.dynamicWeatherEnabled, accent, textColor
-                        ) { actions.setDynamicWeather(it) }
-                        SettingDivider(textColor)
-                        ToggleRow(
-                            "Dynamic temperature tint",
-                            "Subtle warm/cool shift",
-                            settings.dynamicTemperatureEnabled, accent, textColor
-                        ) { actions.setDynamicTemperature(it) }
-                        SettingDivider(textColor)
-                        ToggleRow(
-                            "Dynamic time of day",
-                            "Light by day, deep blue by night",
-                            settings.dynamicTimeEnabled, accent, textColor
-                        ) { actions.setDynamicTime(it) }
-                    }
                 }
             }
 
