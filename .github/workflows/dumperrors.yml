@@ -1,0 +1,29 @@
+name: Dump build errors
+on: [push]
+permissions:
+  issues: write
+  contents: read
+jobs:
+  dump:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Build debug APK
+        continue-on-error: true
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug --stacktrace 2>&1 | tee build.log
+      - name: Dump errors
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          {
+            echo '### Failed step output'
+            grep -n -i -B3 -A12 'error:' build.log | head -c 60000
+          } > /tmp/body.md
+          gh issue create --title "BUILD ERROR DUMP" --body-file /tmp/body.md
