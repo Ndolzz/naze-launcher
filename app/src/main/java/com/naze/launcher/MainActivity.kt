@@ -14,6 +14,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.lifecycleScope
 import com.naze.launcher.core.SystemIntent
+import com.naze.launcher.crash.CrashReportScreen
 import com.naze.launcher.home.HomeScreen
 import com.naze.launcher.home.HomeViewModel
 import com.naze.launcher.lock.LockScreenActivity
@@ -22,6 +23,7 @@ import com.naze.launcher.settings.PreferencesRepository
 import com.naze.launcher.settings.SettingsActivity
 import com.naze.launcher.theme.NazeLauncherTheme
 import kotlinx.coroutines.launch
+import java.io.File
 
 class MainActivity : ComponentActivity() {
 
@@ -30,22 +32,45 @@ class MainActivity : ComponentActivity() {
 
     private val locationPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
-    ) { /* Regardless of outcome, the app degrades gracefully — see LocationProvider. */
+    ) { // Regardless of outcome, the app degrades gracefully — see LocationProvider.
         homeViewModel.refreshWeather(forceRefresh = true)
     }
 
     private val requestDefaultLauncherLegacy = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
-    ) { /* No-op: user may or may not have picked Naze; MainActivity simply proceeds either way. */ }
+    ) { // No-op: user may or may not have picked Naze; MainActivity simply proceeds either way. }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // If the previous launch crashed, show the stack trace on screen instead of
+        // crashing again in a loop. The user can screenshot it and clear it.
+        val crashFile = File(filesDir, NazeApplication.CRASH_FILE)
+        val lastCrash = if (crashFile.exists()) {
+            runCatching { crashFile.readText() }.getOrNull()
+        } else null
+        if (lastCrash != null) {
+            setContent {
+                CrashReportScreen(
+                    trace = lastCrash,
+                    onDismiss = {
+                        runCatching { crashFile.delete() }
+                        startActivity(
+                            Intent(this, MainActivity::class.java)
+                                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                        )
+                        finish()
+                    }
+                )
+            }
+            return
+        }
+
         preferencesRepository = PreferencesRepository(applicationContext)
 
         setContent {
             NazeLauncherTheme {
-                val settings by preferencesRepository.settings.collectAsState(initial =
- null)
+                val settings by preferencesRepository.settings.collectAsState(initial = null)
 
                 when (settings?.onboardingComplete) {
                     null -> Unit // still loading initial DataStore read
@@ -102,8 +127,6 @@ class MainActivity : ComponentActivity() {
     }
 
     /**
-
-
      * Real notification-shade expansion via StatusBarManager — permitted for the
      * HOME role holder, which a launcher by definition is (or is asking to be).
      */
