@@ -1,4 +1,4 @@
-name: Dump build errors
+name: Dump build log
 on: [push]
 permissions:
   issues: write
@@ -15,13 +15,17 @@ jobs:
           java-version: '17'
       - name: Build debug APK
         continue-on-error: true
+        id: buildstep
         run: |
           chmod +x gradlew
           ./gradlew assembleDebug --stacktrace 2>&1 | tee build.log
-      - name: Dump errors
+      - name: Dump log tail
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          grep -n -B5 -A20 '^e: \|FAILURE\|error:' build.log | head -c 60000 > /tmp/body.md
-          if [ ! -s /tmp/body.md ]; then cp build.log /tmp/body.md; fi
-          gh issue create --title "BUILD ERROR DUMP 2" --body-file /tmp/body.md
+          {
+            echo "### Build outcome: ${{ steps.buildstep.outcome }}"
+            echo '--- last 45000 chars of build.log ---'
+            tail -c 45000 build.log
+          } > /tmp/body.md
+          gh issue create --title "BUILD LOG DUMP 3" --body-file /tmp/body.md
