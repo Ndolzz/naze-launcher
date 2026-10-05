@@ -6,8 +6,11 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import android.widget.TextView
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
+import androidx.appcompat.app.AppCompatActivity
+import android.view.Gravity
+import android.graphics.Color as AColor
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.compose.runtime.collectAsState
@@ -32,37 +35,23 @@ class MainActivity : ComponentActivity() {
 
     private val locationPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
-    ) { // Regardless of outcome, the app degrades gracefully — see LocationProvider.
-        homeViewModel.refreshWeather(forceRefresh = true)
-    }
+    ) { homeViewModel.refreshWeather(forceRefresh = true) }
 
     private val requestDefaultLauncherLegacy = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
-    ) { // No-op: user may or may not have picked Naze; MainActivity simply proceeds either way. }
+    ) { }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // If the previous launch crashed, show the stack trace on screen instead of
-        // crashing again in a loop. The user can screenshot it and clear it.
+        // If the previous launch crashed, show the stack trace with plain Android
+        // Views (NOT Compose/Material) so the reporter itself can never crash-loop.
+        // The file is deleted BEFORE rendering so a broken reporter cannot loop.
         val crashFile = File(filesDir, NazeApplication.CRASH_FILE)
-        val lastCrash = if (crashFile.exists()) {
-            runCatching { crashFile.readText() }.getOrNull()
-        } else null
-        if (lastCrash != null) {
-            setContent {
-                CrashReportScreen(
-                    trace = lastCrash,
-                    onDismiss = {
-                        runCatching { crashFile.delete() }
-                        startActivity(
-                            Intent(this, MainActivity::class.java)
-                                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                        )
-                        finish()
-                    }
-                )
-            }
+        if (crashFile.exists()) {
+            val trace = runCatching { crashFile.readText() }.getOrDefault("(could not read crash file)")
+            runCatching { crashFile.delete() }
+            showCrashReportView(trace)
             return
         }
 
@@ -73,7 +62,7 @@ class MainActivity : ComponentActivity() {
                 val settings by preferencesRepository.settings.collectAsState(initial = null)
 
                 when (settings?.onboardingComplete) {
-                    null -> Unit // still loading initial DataStore read
+                    null -> Unit
                     false -> OnboardingScreen(
                         onRequestDefaultLauncher = ::requestDefaultLauncher,
                         onRequestLocationPermission = ::launchLocationPermissionRequest,
@@ -93,9 +82,55 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    /**
+     * Zero-dependency crash viewer: classic Views only. Screenshot it and share
+     * the trace so the root cause can be fixed.
+     */
+    private fun showCrashReportView(trace: String) {
+        val scroll = android.widget.ScrollView(this).apply {
+            setBackgroundColor(AColor.parseColor("#10131A"))
+            val pad = (16 * resources.displayMetrics.density).toInt()
+            setPadding(pad, pad, pad, pad)
+        }
+        val layout = android.widget.LinearLayout(this).apply {
+            orientation = android.widget.LinearLayout.VERTICAL
+        }
+        val title = TextView(this).apply {
+            text = "Naze Launcher stopped"
+            setTextColor(AColor.parseColor("#FF6B6B"))
+            textSize = 18f
+        }
+        val hint = TextView(this).apply {
+            text = "Screenshot this screen and share it to debug:"
+            setTextColor(AColor.parseColor("#B8BFCC"))
+            textSize = 13f
+        }
+        val body = TextView(this).apply {
+            text = trace
+            setTextColor(AColor.parseColor("#D8DDE6"))
+            textSize = 11f
+            typeface = android.graphics.Typeface.MONOSPACE
+        }
+        val button = android.widget.Button(this).apply {
+            text = "Clear and try again"
+            setOnClickListener {
+                startActivity(
+                    Intent(this@MainActivity, MainActivity::class.java)
+                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                )
+                finish()
+            }
+        }
+        layout.addView(title)
+        layout.addView(hint)
+        layout.addView(body)
+        layout.addView(button)
+        scroll.addView(layout)
+        setContentView(scroll)
+    }
+
     override fun onStart() {
         super.onStart()
-        // Battery receiver + torch callback only live while the launcher is visible.
         homeViewModel.startMonitoring()
     }
 
@@ -106,16 +141,12 @@ class MainActivity : ComponentActivity() {
 
     override fun onResume() {
         super.onResume()
-        // New installs/uninstalls show up immediately; weather is interval-gated
-        // inside WeatherRepository, so this call stays cheap even on every resume.
         homeViewModel.refreshApps()
         homeViewModel.refreshWeather()
     }
 
     override fun onBackPressed() {
-        // A launcher's Home screen is the root of the task stack — pressing back here
-        // should do nothing, matching stock launcher behavior (prevents accidental exits).
-        // Overlay/sheet dismissal is handled inside HomeScreen via BackHandler.
+        // Home is the root of the task stack — back does nothing here.
     }
 
     private fun openNazeLock() {
@@ -126,10 +157,6 @@ class MainActivity : ComponentActivity() {
         startActivity(Intent(this, SettingsActivity::class.java))
     }
 
-    /**
-     * Real notification-shade expansion via StatusBarManager — permitted for the
-     * HOME role holder, which a launcher by definition is (or is asking to be).
-     */
     private fun expandNotifications() {
         runCatching {
             val service = getSystemService("statusbar") ?: return
@@ -137,7 +164,6 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    /** Every [SystemIntent] maps to a real system capability — no dead ends. */
     private fun performSystemAction(action: SystemIntent, packageName: String?) {
         val intent = when (action) {
             SystemIntent.WIFI_PANEL ->
@@ -152,7 +178,7 @@ class MainActivity : ComponentActivity() {
                 if (packageName == null) return
                 Intent(
                     Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-                    Uri.parse("package:$packageName")
+                    Uri.parse("package:" + packageName)
                 )
             }
         }
@@ -176,7 +202,6 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
-        // Pre-Q fallback: send the user to the system "Home app" chooser.
         requestDefaultLauncherLegacy.launch(Intent(Settings.ACTION_HOME_SETTINGS))
     }
 
