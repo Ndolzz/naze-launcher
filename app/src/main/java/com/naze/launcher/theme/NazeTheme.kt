@@ -87,7 +87,8 @@ fun NazeLauncherTheme(content: @Composable () -> Unit) {
     val typography = Typography(
         displayLarge = TextStyle(
             fontFamily = display,
-            fontWeight = FontWeight.Light,
+            fontWeight = FontWeight.
+Light,
             fontSize = 96.sp,
             letterSpacing = (-3).sp
       

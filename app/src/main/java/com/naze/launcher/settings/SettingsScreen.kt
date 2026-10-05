@@ -96,6 +96,7 @@ fun SettingsScreen(
     Column(
         modifier = Modifier
 
+
             .fillMaxSize()
             .statusBarsPadding()
             .imePadding()
@@ -220,7 +221,8 @@ fun SettingsScreen(
                             Spacer(Modifier.height(10.dp))
                             Row {
                                 ChoiceChip("Preview Naze Lock", false, accent, textColor, surfaceHigh) {
-                                    actions.openNazeLock()
+                                    actions.
+openNazeLock()
                                 }
                             }
                         }
@@ -255,7 +257,8 @@ fun SettingsScreen(
                                 ChoiceChip("5", settings.drawerColumns == 5, accent, textColor, surfaceHigh) {
                                     actions.setDrawerColumns(5)
                                 }
-                    
+                   
+ 
             ChoiceChip("6", settings.drawerColumns == 6, accent, textColor, surfaceHigh) {
                                     actions.setDrawerColumns(6)
                                 }
@@ -299,7 +302,8 @@ fun SettingsScreen(
                             "Automatic location",
                             "Single GPS fix on refresh, never background tracking",
                             settings.useAutomaticLocation, accent, textColor
-                       
+                     
+  
  ) { actions.setAutomaticLocation(it) }
                         SettingDivider(textColor)
                         ToggleRow(
@@ -341,7 +345,8 @@ fun SettingsScreen(
                                 fontFamily = LocalNazeDisplayFont.current,
                                 letterSpacing = 2.sp
                             )
-                            Spacer(Modifier.height(4.dp))
+                            Spacer(Modifier.
+height(4.dp))
                             Text(
                                 "Version $versionName",
                                 color = textColor.copy(alpha = 0.55f),
@@ -515,7 +520,8 @@ private fun PerformanceModeSelector(
                     Text(
                         when (mode) {
                             PerformanceMode.PERFORMANCE -> "Static ambience, snappy motion — for low-end devices"
-                    
+               
+     
         PerformanceMode.BALANCED -> "Full experience — ambient light, staggered motion"
                             PerformanceMode.BATTERY_SAVER -> "Minimal effects, maximum battery"
                         },
@@ -577,7 +583,8 @@ private fun GestureRow(
                 .padding(horizontal = 14.dp, vertical = 11.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-        
+  
+      
     Text(
                 trigger.label(),
                 color = textColor.copy(alpha = 0.9f),
@@ -625,7 +632,8 @@ private fun GestureRow(
                                 NazeIcons.Check,
                                 contentDescription = null,
                                 tint = accent,
-                              
+                       
+       
   modifier = Modifier.size(14.dp)
                             )
                             Spacer(Modifier.width(8.dp))
@@ -742,7 +750,8 @@ private fun ManualLocationFields(
                 ) {
                     onSave(name.trim(), lat.toDouble(), lon.toDouble())
                 }
-                .padding(horizontal = 18.dp, vertical = 9.dp),
+                .padding(horizontal = 18.dp, vertical = 9.
+dp),
     
         verticalAlignment = Alignment.CenterVertically
         ) {

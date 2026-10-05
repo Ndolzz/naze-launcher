@@ -66,6 +66,7 @@ class SettingsActivity : ComponentActivity() {
                         },
                         setGestureAction = { trigger, action ->
                             lifecycleScope.launch { repository.setGestureAction(trigger,
+
  action) }
                         }
                     ),

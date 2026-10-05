@@ -138,7 +138,8 @@ fun ClockView(
                                     )
                                 },
                                 label = "digit$index"
-                            ) { digitChar ->
+                            ) { digitChar -
+>
                                 Digit(digitChar, fontSizeSp, textColor)
                             }
                         } else {

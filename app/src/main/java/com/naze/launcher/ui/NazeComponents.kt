@@ -42,6 +42,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.naze.
+
 launcher.theme.LocalNazeUiFont
 import java.util.Locale
 import androidx.compose.animation.core.Spring
@@ -101,7 +102,8 @@ fun NazeIconButton(
             imageVector = icon,
             contentDescription = contentDescription,
             tint = tint,
-            modifier = Modifier.size(iconSize)
+            modifier = 
+Modifier.size(iconSize)
         )
     }
 }
@@ -167,7 +169,8 @@ fun NazeLoader(
         initialValue = 0f,
         targetValue = 1f,
         animationSpec = infiniteRepeatable(
-            animation = tween(durationMillis = 1100, easing = LinearEasing),
+           
+ animation = tween(durationMillis = 1100, easing = LinearEasing),
             repeatMode = RepeatMode.Restart
         ),
         label = "nazeLoaderPhase"

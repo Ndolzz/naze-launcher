@@ -101,6 +101,7 @@ fun AppDrawerScreen(
         Row(verticalAlignment = Alignment.CenterVertically) {
             SearchField(
                 query =
+
  query,
                 onQueryChange = { query = it },
                 hint = "Search apps",
@@ -151,7 +152,8 @@ fun AppDrawerScreen(
                 verticalArrangement = Arrangement.spacedBy(14.dp)
             ) {
                 items(filtered, key = { it.packageName }) { app ->
-                    val index = 
+                    val index =
+ 
 filtered.indexOf(app)
                     AppGridItem(
                         app = app,
@@ -218,7 +220,8 @@ private fun AppGridItem(
             modifier = Modifier.size(56.dp)
         )
         if (showLabel) {
-         
+       
+  
    Spacer(Modifier.height(6.dp))
             Text(
                 text = app.label,

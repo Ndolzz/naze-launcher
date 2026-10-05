@@ -106,7 +106,8 @@ fun QuickSearchScreen(
             onQueryChange = { query = it },
             hint = "Search apps and actions",
             textColor = textColor,
-            fontSize = 17.sp,
+    
+        fontSize = 17.sp,
             autoFocus = true,
 
             modifier = Modifier.focusRequester(focusRequester)
@@ -154,7 +155,8 @@ fun QuickSearchScreen(
                             AppResultRow(app, textColor) { onAppClick(app) }
                         }
                     }
-                    if (matchedActions.isNotEmpty()) {
+                    if (matchedActions.isNotEmpty()
+) {
                         item {
                      
        SectionLabel("ACTIONS", textColor)

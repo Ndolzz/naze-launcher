@@ -194,7 +194,8 @@ private fun OnboardingStep(
             fontSize = 30.sp,
             fontWeight = FontWeight.Medium,
             fontFamily = LocalNazeDisplayFont.current,
-            textAlign = TextAlign.Center
+  
+          textAlign = TextAlign.Center
         )
         Spacer(Modifier.height(16.dp))
         Text(

@@ -102,12 +102,11 @@ class MainActivity : ComponentActivity() {
     }
 
     /**
+
      * Real notification-shade expansion via StatusBarManager — permitted for the
      * HOME role holder, which a launcher by definition is (or is asking to be).
      */
     private fun expandNotifications() {
-        // StatusBarManager.expandNotificationsPanel() is not part of the public SDK,
-        // so reach the statusbar system service through reflection instead.
         runCatching {
             val service = getSystemService("statusbar") ?: return
             service.javaClass.getMethod("expandNotificationsPanel").invoke(service)

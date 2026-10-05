@@ -99,6 +99,7 @@ class WeatherRepository(
         context.dataStore.edit { prefs ->
             prefs[PreferencesKeys.WEATHER_LOCATION_NAME] = reading.locationName
             prefs[PreferencesKeys.WEATHER_TEMP_C] = reading
+
 .temperatureCelsius
             prefs[PreferencesKeys.WEATHER_CONDITION] = reading.condition.name
             prefs[PreferencesKeys.WEATHER_FETCHED_AT] = reading.fetchedAtMillis

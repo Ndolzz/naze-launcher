@@ -101,7 +101,8 @@ fun WeatherSummaryView(
                     onClick = onOpenSettings,
                     tint = accent,
                     size = 28.dp,
-                    iconSize = 14.dp
+             
+       iconSize = 14.dp
                 )
             }
  else {
@@ -150,7 +151,8 @@ fun WeatherSummaryView(
                         fontFamily = LocalNazeUiFont.current,
                         modifier = Modifier.padding(top = 1.dp)
                     )
-                }
+   
+             }
             }
         }
     }

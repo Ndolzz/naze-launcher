@@ -167,6 +167,7 @@ object NazeIcons {
             circle(12f, 12f, 8.5f)
             moveTo(12f, 12f); lineTo(12f, 7.5f)
             moveTo(12f, 12f); lineTo(15.5f, 13
+
 .5f)
         }
     }
@@ -303,7 +304,8 @@ object NazeIcons {
         strokeIcon("WeatherFog") {
             cloud()
             moveTo(7.5f, 19.5f); lineTo(16.5f, 19.5f)
-            moveTo(9.
+            moveTo(
+9.
 5f, 21.8f); lineTo(14.5f, 21.8f)
         }
     }

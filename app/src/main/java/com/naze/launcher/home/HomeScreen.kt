@@ -133,7 +133,8 @@ fun HomeScreen(
         }
     }
 
-    BackHandler(enabled = overlay != null || sheet != Sheet.NONE || editApp != null) {
+    BackHandler(enabled = overlay != null || sheet != Sheet.NONE || editApp != null) 
+{
         when {
             overlay != null -> overlay = null
             editApp != null -> editApp = null
@@ -190,6 +191,7 @@ fun HomeScreen(
             title = "Launcher settings",
             subtitle = "Customize Naze",
             icon = NazeIcons.Settings,
+
             run = { overlay = null; onOpenSettings() }
 
         )
@@ -241,7 +243,8 @@ fun HomeScreen(
                     accent = ambience.accent,
                     onRetry = { viewModel.refreshWeather(forceRefresh = true) },
                     onOpenSettings = onOpenSettings,
-                    modifier = Modifier.padding(top = 14.dp)
+               
+     modifier = Modifier.padding(top = 14.dp)
           
       )
             }
@@ -290,7 +293,8 @@ fun HomeScreen(
             enter = fadeIn(tween(sheetDuration)) +
                 slideInVertically(tween(sheetDuration)) { it / 12 },
             exit = fadeOut(tween((sheetDuration * 0.6f).toInt())) +
-                slideOutVertically(tween((sheetDuration * 0.6f).toInt())) { it / 16 },
+                slideOutVertically(tween((sheetDuration * 0.6f).toInt())) { it /
+ 16 },
             modifier = Modifier.fillMaxSize()
     
     ) {
@@ -449,7 +453,8 @@ private fun HomeTopRow(
             tint = textColor.copy(alpha = 0.85f),
             background = textColor.copy(alpha = 0.07f),
             size = 38.dp,
-            iconSize = 17.dp
+      
+      iconSize = 17.dp
         )
     }
 }
@@ -567,7 +572,8 @@ private fun QuickActionsContent(
     val tiles = listOf(
         QuickActionTileData(NazeIcons.Flash, "Flashlight", torchOn, onToggleTorch),
         QuickActionTileData(NazeIcons.Wifi, "Wi-Fi", active = false) { onSystemAction(SystemIntent.WIFI_PANEL, null) },
-        QuickActionTileData(NazeIcons.Bluetooth, "Bluetooth", active = false) { onSystemAction(SystemIntent.BLUETOOTH_SETTINGS, null) },
+        QuickActionTileData(NazeIcons.Bluetooth, "Bluetooth", active = false) { onSystemAction(SystemIntent.BLUETOOTH_SETTINGS, null) }
+,
         QuickActionTileData(NazeIcons.Bell, "Notifs", active = false, onClick = onExpandNotifications),
         QuickActionTileData(NazeIcons.Wallpaper, "Wallpaper", active = false) { onSystemAction(SystemIntent.WALLPAPER_PICKER, null) },
         QuickActionTileData(NazeIcons.Info, "Device", active = false, onClick = onOpenDeviceInfo),
@@ -623,7 +629,8 @@ private fun QuickActionTile(
             Icon(
                 tile.icon,
                 contentDescription = tile.label,
-                tint = if (tile.active) accent else textColor.copy(alpha = 0.85f),
+                tint = if (tile.active) accent else textColor.copy(alpha = 0.8
+5f),
                 modifier = Modifier.size(22.dp)
         
     )
@@ -750,7 +757,8 @@ private fun AppActionsContent(
             Text(
                 text = app.packageName,
                 color = textColor.copy(alpha = 0.45f),
-                fontSize = 11.sp,
+               
+ fontSize = 11.sp,
                 fontFamily = LocalNazeUiFont.current,
                 maxLines = 1
             )

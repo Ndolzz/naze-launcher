@@ -47,6 +47,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     private val deviceStatusMonitor = DeviceStatusMonitor(application)
 
 
+
     /** Rebuilt whenever the user saves a different OpenWeatherMap key in Settings. */
     private var weatherRepository: WeatherRepository? = null
     private var lastApiKey: String? = null
