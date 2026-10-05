@@ -1,0 +1,16 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Dark base: Naze is a dark-first launcher, so the window is deep navy
+         behind Compose content instead of the old light Material theme. -->
+    <style name="Theme.NazeLauncher" parent="android:Theme.Material.NoActionBar">
+        <item name="android:windowBackground">@color/naze_window_background</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="23">false</item>
+    </style>
+
+    <!-- Home screen draws its own full-bleed background via Compose. -->
+    <style name="Theme.NazeLauncher.Home" parent="Theme.NazeLauncher" />
+
+    <!-- Settings console — same dark base, its own task. -->
+    <style name="Theme.NazeLauncher.Settings" parent="Theme.NazeLauncher" />
+</resources>

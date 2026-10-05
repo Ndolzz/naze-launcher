@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Location is OPTIONAL: only requested if the user opts in during onboarding.
+         The app fully supports manual location entry with no permission at all. -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <!-- Required to fetch weather from the network. -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!-- Standard launcher capabilities: bind app widgets, query installed apps. -->
+    <uses-permission android:name="android.permission.BIND_APPWIDGET" />
+    <uses-permission android:name="android.permission.EXPAND_STATUS_BAR" tools:ignore="ProtectedPermissions" />
+
+    <!-- Needed on Android 11+ to enumerate all launchable apps (package visibility). -->
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent>
+    </queries>
+
+    <application
+        android:name=".NazeApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.NazeLauncher"
+        android:hardwareAccelerated="true"
+        tools:targetApi="34">
+
+        <!-- The Home Screen. This intent-filter is what lets Android offer
+             Naze Launcher as a Home app / default launcher. -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:stateNotNeeded="true"
+            android:screenOri
+entation="portrait"
+            android:configChanges="orientation|screenSize|keyboardHidden|uiMode"
+            android:theme="@style/Theme.NazeLauncher.Home"
+            android:windowSoftInputMode="adjustPan">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.HOME" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Widget host needs a request-bind result target on some OEM/API levels. -->
+        <activity
+            android:name=".widgets.WidgetBindActivity"
+            android:exported="false"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <!-- Naze Lock: a glanceable clock screen that can appear over the system
+             lock screen. It never replaces the system keyguard (Android does not
+             allow that for launchers); unlocking hands off to the real system unlock. -->
+        <activity
+            android:name=".lock.LockScreenActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"
+            android:excludeFromRecents="true"
+            android:showWhenLocked="true"
+            android:turnScreenOn="true"
+            android:theme="@style/Theme.NazeLauncher.Home" />
+
+        <!-- Launcher settings — runs in its own task so the system back gesture
+             dismisses it independently of the home screen. -->
+        <activity
+            android:name=".settings.SettingsActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.NazeLauncher.Settings" />
+
+    </application>
+</manifest>
+
