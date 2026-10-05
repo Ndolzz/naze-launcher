@@ -44,6 +44,9 @@ import androidx.compose.ui.unit.sp
 import com.naze.
 launcher.theme.LocalNazeUiFont
 import java.util.Locale
+import androidx.compose.animation.core.Spring
+import androidx.compose.ui.graphics.vector.ImageVector
+import com.naze.launcher.theme.LocalNazeUiFont
 
 /**
  * Shared Naze design-system components. Everything visual in the app is built from

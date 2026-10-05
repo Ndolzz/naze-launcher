@@ -78,6 +78,7 @@ import com.naze.launcher.ui.formatBytes
 import com.naze.launcher.ui.pressScale
 import com.naze.launcher.weather.WeatherSummaryView
 import java.util.Locale
+import androidx.compose.ui.graphics.vector.ImageVector
 
 private enum class Overlay { DRAWER, SEARCH }
 private enum class Sheet { NONE, QUICK_ACTIONS, DEVICE_INFO }
@@ -134,8 +135,7 @@ fun HomeScreen(
 
     BackHandler(enabled = overlay != null || sheet != Sheet.NONE || editApp != null) {
         when {
-            overlay != null -> overlay
- = null
+            overlay != null -> overlay = null
             editApp != null -> editApp = null
             else -> sheet = Sheet.NONE
         }
@@ -454,8 +454,7 @@ private fun HomeTopRow(
     }
 }
 
-// ── Search pill 
-─────────────────────────────────────────────────────────────────
+// ── Search pill ─────────────────────────────────────────────────────────────────
 
 @Composable
 private fun SearchPill(

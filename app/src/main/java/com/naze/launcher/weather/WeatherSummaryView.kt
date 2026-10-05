@@ -19,6 +19,7 @@ import com.naze.launcher.theme.LocalNazeUiFont
 import com.naze.launcher.ui.NazeIconButton
 import com.naze.launcher.ui.NazeIcons
 import com.naze.launcher.ui.NazeLoader
+import androidx.compose.ui.graphics.vector.ImageVector
 
 private fun conditionLabel(c: WeatherCondition): String = when (c) {
     WeatherCondition.CLEAR -> "Clear"

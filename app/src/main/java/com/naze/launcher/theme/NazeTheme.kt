@@ -39,8 +39,8 @@ import com.naze.launcher.core.PerformanceMode
 private val SpaceGroteskFont = GoogleFont("Space Grotesk")
 private val InterFont = GoogleFont("Inter")
 
-val LocalNazeDisplayFont = staticCompositionLocalOf { FontFamily.SansSerif }
-val LocalNazeUiFont = staticCompositionLocalOf { FontFamily.SansSerif }
+val LocalNazeDisplayFont = staticCompositionLocalOf<FontFamily> { FontFamily.SansSerif }
+val LocalNazeUiFont = staticCompositionLocalOf<FontFamily> { FontFamily.SansSerif }
 
 private fun displayFamily(provider: GoogleFont.Provider): FontFamily = FontFamily(
     Font(googleFont = SpaceGroteskFont, fontProvider = provider, weight = FontWeight.Light),

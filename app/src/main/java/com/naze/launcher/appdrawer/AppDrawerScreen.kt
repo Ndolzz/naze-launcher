@@ -47,7 +47,9 @@ import com.naze.launcher.ui.NazeIconButton
 import com.naze.launcher.ui.NazeIcons
 import com.naze.launcher.ui.SearchField
 import com.naze.launcher.ui.pressScale
-import kotlinx.coroutines.delayenum class AppSortMode { NAME, RECENT }
+import kotlinx.coroutines.delay
+
+enum class AppSortMode { NAME, RECENT }
 
 /**
  * The modern Naze app drawer: a consistent responsive grid with proportional icon

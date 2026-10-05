@@ -46,6 +46,7 @@ import com.naze.launcher.ui.EmptyState
 import com.naze.launcher.ui.NazeIcons
 import com.naze.launcher.ui.SearchField
 import com.naze.launcher.ui.pressScale
+import androidx.compose.ui.graphics.vector.ImageVector
 
 /**
  * A launcher action surfaced in search — e.g. "Toggle flashlight", "Open settings".

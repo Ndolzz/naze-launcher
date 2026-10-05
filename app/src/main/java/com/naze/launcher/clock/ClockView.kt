@@ -39,6 +39,7 @@ import kotlinx.coroutines.delay
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
+import androidx.compose.ui.text.TextStyle
 
 data class ClockDisplay(val time: String, val date: String)
 
@@ -158,7 +159,7 @@ private fun Digit(char: Char, fontSizeSp: Float, textColor: Color) {
         fontSize = fontSizeSp.sp,
         fontWeight = FontWeight.Light,
         fontFamily = LocalNazeDisplayFont.current,
-        fontFeatureSettings = "tnum",
+        style = TextStyle(fontFeatureSettings = "tnum"),
         textAlign = TextAlign.Center,
         modifier = Modifier.width((fontSizeSp * 0.62f).dp)
     )

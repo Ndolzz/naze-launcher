@@ -23,9 +23,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -43,6 +40,9 @@ import androidx.compose.ui.unit.sp
 import com.naze.launcher.theme.LocalNazeDisplayFont
 import com.naze.launcher.theme.LocalNazeUiFont
 import com.naze.launcher.ui.pressScale
+import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 
 private val OnboardingBackgroundTop = Color(0xFF0A0E1A)
 private val OnboardingBackgroundBottom = Color(0xFF151D33)

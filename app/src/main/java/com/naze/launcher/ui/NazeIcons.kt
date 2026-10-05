@@ -111,8 +111,7 @@ object NazeIcons {
     }
 
     val Flash: ImageVector by lazy {
-        strokeIcon("
-Flash") {
+        strokeIcon("Flash") {
             moveTo(13f, 2f)
             lineTo(5f, 13f)
             lineTo(11f, 13f)
