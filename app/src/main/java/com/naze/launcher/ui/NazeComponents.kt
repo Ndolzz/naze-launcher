@@ -44,7 +44,6 @@ import java.util.Locale
 import androidx.compose.animation.core.Spring
 import com.naze.launcher.theme.LocalNazeUiFont
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.naze.launcher.theme.LocalNazeUiFont
 
 /**
  * Shared Naze design-system components. Everything visual in the app is built from
@@ -165,11 +164,8 @@ fun NazeLoader(
     val phase by transition.animateFloat(
         initialValue = 0f,
         targetValue = 1f,
-        animationSpec = infiniteRepea
-table(
-         
-  
- animation = tween(durationMillis = 1100, easing = LinearEasing),
+        animationSpec = infiniteRepeatable(
+            animation = tween(durationMillis = 1100, easing = LinearEasing),
             repeatMode = RepeatMode.Restart
         ),
         label = "nazeLoaderPhase"

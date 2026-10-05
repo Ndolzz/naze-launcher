@@ -6,6 +6,7 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.StrokeJoin
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.PathBuilder
+import androidx.compose.ui.graphics.vector.PathNode
 import androidx.compose.ui.unit.dp
 
 /**
@@ -24,13 +25,22 @@ object NazeIcons {
             viewportWidth = 24f,
             viewportHeight = 24f
         ).addPath(
-            pathData = PathBuilder().apply(build).getNodes(),
+            pathData = buildNodes(build),
             name = "$name/stroke",
             stroke = SolidColor(Color.White),
             strokeLineWidth = 2f,
             strokeLineCap = StrokeCap.Round,
             strokeLineJoin = StrokeJoin.Round
         ).build()
+    private fun buildNodes(build: PathBuilder.() -> Unit): List<PathNode> {
+        val pb = PathBuilder()
+        pb.build()
+        val field = PathBuilder::class.java.getDeclaredField("nodes")
+        field.isAccessible = true
+        @Suppress("UNCHECKED_CAST")
+        return field.get(pb) as List<PathNode>
+    }
+
     private fun PathBuilder.circle(cx: Float, cy: Float, r: Float) {
         val k = r * 0.5523f
         moveTo(cx - r, cy)
@@ -108,8 +118,7 @@ object NazeIcons {
         }
     }
 
-    val Flash: ImageVector by la
-zy {
+    val Flash: ImageVector by lazy {
         strokeIcon("Flash") {
             moveTo(13f, 2f)
             lineTo(5f, 13f)
@@ -165,8 +174,7 @@ zy {
         strokeIcon("Clock") {
             circle(12f, 12f, 8.5f)
             moveTo(12f, 12f); lineTo(12f, 7.5f)
-            moveTo(1
-2f, 12f); lineTo(15.5f, 13.5f)
+            moveTo(12f, 12f); lineTo(15.5f, 13.5f)
         }
     }
 

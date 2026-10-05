@@ -41,8 +41,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.graphics.drawable.toBitmap
 import com.naze.launcher.appdrawer.AppInfo
-import com.naze.launcher.theme.LocalNazeUiFon
-t
+import com.naze.launcher.theme.LocalNazeUiFont
 import com.naze.launcher.ui.EmptyState
 import com.naze.launcher.ui.NazeIcons
 import com.naze.launcher.ui.SearchField
@@ -155,14 +154,9 @@ fun QuickSearchScreen(
                             AppResultRow(app, textColor) { onAppClick(app) }
                         }
                     }
-                    if (matchedActions.isNotEmpty(
-)
-) {
+                    if (matchedActions.isNotEmpty()) {
                         item {
-    
-                 
-       SectionLabel("ACTIONS", text
-Color)
+                        SectionLabel("ACTIONS", textColor)
                         }
                         items(matchedActions, key = { it.title }) { action ->
                             ActionRow(action, textColor, accent)
@@ -220,10 +214,8 @@ private fun ActionRow(action: SearchAction, textColor: Color, accent: Color) {
         modifier = Modifier.fillMaxWidth()
             .pressScale(interaction, pressedScale = 0.97f)
             .clickable(interactionSource = interaction, indication = null, onClick = action.run)
-          
-  .padding(horizontal = 8.dp, vertical = 8.dp),
-        ver
-ticalAlignment = Alignment.CenterVertically
+            .padding(horizontal = 8.dp, vertical = 8.dp),
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
             action.icon,
