@@ -7,7 +7,6 @@ on:
 
 permissions:
   contents: read
-  issues: write
 
 jobs:
   build:
@@ -46,18 +45,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build debug APK
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          set +e
-          ./gradlew assembleDebug --stacktrace > build.log 2>&1
-          code=$?
-          if [ $code -ne 0 ]; then
-            { echo "Run: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"; echo; echo '### Compiler errors'; echo; echo '```'; grep -E '^e: ' build.log; echo '```'; echo; echo '### What went wrong'; echo; echo '```'; grep -A8 'What went wrong' build.log | head -n 60; echo '```'; } > issue-body.md
-            gh issue create --title "CI debug: assembleDebug failed (run $GITHUB_RUN_NUMBER)" --body-file issue-body.md || true
-          fi
-          tail -n 200 build.log
-          exit $code
+        run: ./gradlew assembleDebug --stacktrace
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
