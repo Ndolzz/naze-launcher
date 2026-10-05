@@ -1,11 +1,13 @@
 name: Build Naze Launcher APK
 
-# Runs automatically on every push to main, and can also be triggered manually
-# from the Actions tab ("Run workflow" button) — no local Android Studio needed.
 on:
   push:
     branches: [ "main" ]
   workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
 
 jobs:
   build:
@@ -22,17 +24,11 @@ jobs:
           java-version: '17'
           cache: 'gradle'
 
-      # ubuntu-latest no longer ships a usable preinstalled Gradle, so install
-      # the exact Gradle version this project targets (AGP 8.5.2 needs 8.x).
       - name: Set up Gradle 8.7
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.7'
 
-      # GitHub's ubuntu-latest runners ship a preinstalled, license-accepted
-      # Android SDK that already includes the platform and build-tools this
-      # project needs, so we use it directly and only fall back to sdkmanager
-      # when a component is missing.
       - name: Set up Android SDK
         run: |
           echo "ANDROID_HOME=$ANDROID_HOME"
@@ -43,8 +39,6 @@ jobs:
             sdkmanager "platforms;android-34" "build-tools;34.0.0" > /dev/null
           fi
 
-      # This repo doesn't ship a committed Gradle wrapper jar, so we bootstrap
-      # one using the pinned Gradle installed above.
       - name: Generate Gradle wrapper
         run: gradle wrapper --gradle-version 8.7
 
@@ -52,7 +46,18 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build debug APK
-        run: ./gradlew assembleDebug --stacktrace
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set +e
+          ./gradlew assembleDebug --stacktrace > build.log 2>&1
+          code=$?
+          if [ $code -ne 0 ]; then
+            { echo "Run: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"; echo; echo '### Last 150 lines of gradle build output'; echo; echo '```'; tail -n 150 build.log; echo '```'; } > issue-body.md
+            gh issue create --title "CI debug: assembleDebug failed (run $GITHUB_RUN_NUMBER)" --body-file issue-body.md || true
+          fi
+          cat build.log
+          exit $code
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
