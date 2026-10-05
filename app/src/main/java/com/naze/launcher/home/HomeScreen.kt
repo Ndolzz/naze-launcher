@@ -146,7 +146,7 @@ fun HomeScreen(
     val homeScale by animateFloatAsState(
         targetValue = if (overlay == null) 1f else 0.94f,
         animationSpec = spring(
-            dampingRatio = Spring.DampingRatioLowBouncy,
+            dampingRatio = Spring.DampingRatioMediumLow,
             stiffness = 700f
         ),
         label = "homeScale"
@@ -589,7 +589,7 @@ private fun QuickActionsContent(
 }
 
 private data class QuickActionTileData(
-    val icon: androidx.compose.ui.graphics.vector.ImageVector,
+    val icon: androidx.compose.ui.graphics.ImageVector,
     val label: String,
     val active: Boolean,
     val onClick: () -> Unit
@@ -771,7 +771,7 @@ private fun AppActionsContent(
 
 @Composable
 private fun SheetActionRow(
-    icon: androidx.compose.ui.graphics.vector.ImageVector,
+    icon: androidx.compose.ui.graphics.ImageVector,
     label: String,
     textColor: Color,
     accent: Color,

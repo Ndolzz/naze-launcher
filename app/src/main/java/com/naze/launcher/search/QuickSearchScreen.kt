@@ -34,7 +34,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.ImageVector
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -46,6 +46,7 @@ import com.naze.launcher.ui.EmptyState
 import com.naze.launcher.ui.NazeIcons
 import com.naze.launcher.ui.SearchField
 import com.naze.launcher.ui.pressScale
+import androidx.compose.ui.graphics.vector.ImageVector
 
 /**
  * A launcher action surfaced in search — e.g. "Toggle flashlight", "Open settings".
