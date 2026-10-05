@@ -1,0 +1,26 @@
+name: Dump files
+on: [push, workflow_dispatch]
+permissions:
+  issues: write
+  contents: read
+jobs:
+  dump:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Dump base64
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          B1=$(base64 -w0 app/src/main/java/com/naze/launcher/search/QuickSearchScreen.kt)
+          B2=$(base64 -w0 app/src/main/java/com/naze/launcher/ui/NazeComponents.kt)
+          B3=$(base64 -w0 app/src/main/java/com/naze/launcher/ui/NazeIcons.kt)
+          {
+            echo "###QS"
+            echo "$B1"
+            echo "###NC"
+            echo "$B2"
+            echo "###NI"
+            echo "$B3"
+          } > /tmp/body.md
+          gh issue create --title "DUMP" --body-file /tmp/body.md
