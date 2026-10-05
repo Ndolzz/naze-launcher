@@ -91,8 +91,7 @@ fun AppDrawerScreen(
     }
 
     Column(
-        modifier = Modifier
-            .fillMaxSize()
+        modifier = Modifier.fillMaxSize()
             .background(scrimColor)
             .padding(horizontal = 20.dp)
     ) {
@@ -101,6 +100,7 @@ fun AppDrawerScreen(
         Row(verticalAlignment = Alignment.CenterVertically) {
             SearchField(
                 query =
+
 
  query,
                 onQueryChange = { query = it },
@@ -136,8 +136,7 @@ fun AppDrawerScreen(
 
         if (apps.isEmpty()) {
             Box(Modifier.weight(1f).fillMaxWidth(), contentAlignment = Alignment.Center) {
-                Text(
-                    "No apps found",
+                Text("No apps found",
                     color = textColor.copy(alpha = 0.6f),
                     fontSize = 15.sp,
                     fontFamily = LocalNazeUiFont.current
@@ -152,7 +151,8 @@ fun AppDrawerScreen(
                 verticalArrangement = Arrangement.spacedBy(14.dp)
             ) {
                 items(filtered, key = { it.packageName }) { app ->
-                    val index =
+                    val index 
+=
  
 filtered.indexOf(app)
                     AppGridItem(
@@ -198,15 +198,13 @@ private fun AppGridItem(
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
-            .graphicsLayer {
+        modifier = Modifier.graphicsLayer {
                 alpha = progress
                 val s = 0.82f + 0.18f * progress
                 scaleX = s
                 scaleY = s
             }
-            .pressScale(interaction, pressedScale = 0.90f)
-            .combinedClickable(
+            .pressScale(interaction, pressedScale = 0.90f).combinedClickable(
                 interactionSource = interaction,
                 indication = null,
                 onClick = onClick,
@@ -220,7 +218,8 @@ private fun AppGridItem(
             modifier = Modifier.size(56.dp)
         )
         if (showLabel) {
-       
+     
+  
   
    Spacer(Modifier.height(6.dp))
             Text(

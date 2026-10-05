@@ -40,21 +40,18 @@ fun FavoriteDock(
     backdrop: Color = Color.Transparent
 ) {
     Row(
-        modifier = modifier
-            .fillMaxWidth()
+        modifier = modifier.fillMaxWidth()
             .padding(horizontal = 28.dp, vertical = 10.dp),
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically
     ) {
         dockApps.forEach { app ->
             val interaction = remember { MutableInteractionSource() }
+
             Box(
-                modifier = Modifier
-                    .size(62.dp)
-                    .pressScale(interaction, pressedScale = 0.88f)
-                    .clip(CircleShape)
-                    .background(backdrop)
-                    .combinedClickable(
+                modifier = Modifier.size(62.dp)
+                    .pressScale(interaction, pressedScale = 0.88f).clip(CircleShape)
+                    .background(backdrop).combinedClickable(
                         interactionSource = interaction,
                         indication = null,
                         onClick = { onAppClick(app) },

@@ -88,6 +88,7 @@ fun NazeLauncherTheme(content: @Composable () -> Unit) {
         displayLarge = TextStyle(
             fontFamily = display,
             fontWeight = FontWeight.
+
 Light,
             fontSize = 96.sp,
             letterSpacing = (-3).sp

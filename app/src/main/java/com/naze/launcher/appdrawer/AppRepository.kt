@@ -54,8 +54,7 @@ class AppRepository(private val context: Context) {
 
     suspend fun recordLaunch(packageName: String) {
         context.dataStore.edit { prefs ->
-            val ledger = parseLedger(prefs[lastUsedKey])
-                .toMutableMap()
+            val ledger = parseLedger(prefs[lastUsedKey]).toMutableMap()
                 .apply { put(packageName, System.currentTimeMillis()) }
             prefs[lastUsedKey] = serializeLedger(ledger)
         }
@@ -63,8 +62,7 @@ class AppRepository(private val context: Context) {
 
     suspend fun getRecentPackageNamesSortedByRecency(): List<String> {
         val prefs = context.dataStore.data.first()
-        return parseLedger(prefs[lastUsedKey])
-            .entries
+        return parseLedger(prefs[lastUsedKey]).entries
             .sortedByDescending { it.value }
             .map { it.key }
     }

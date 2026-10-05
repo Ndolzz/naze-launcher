@@ -103,6 +103,7 @@ class MainActivity : ComponentActivity() {
 
     /**
 
+
      * Real notification-shade expansion via StatusBarManager — permitted for the
      * HOME role holder, which a launcher by definition is (or is asking to be).
      */

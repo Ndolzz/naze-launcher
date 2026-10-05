@@ -94,17 +94,12 @@ fun SettingsScreen(
     val surfaceHigh = ambience.surfaceHigh
 
     Column(
-        modifier = Modifier
-
-
-            .fillMaxSize()
-            .statusBarsPadding()
-            .imePadding()
+        modifier = Modifier.fillMaxSize()
+            .statusBarsPadding().imePadding()
     ) {
         // Header
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
+            modifier = Modifier.fillMaxWidth()
                 .padding(horizontal = 12.dp, vertical = 10.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -116,8 +111,7 @@ fun SettingsScreen(
                 background = surface
             )
             Spacer(Modifier.width(12.dp))
-            Text(
-                "NAZE SETTINGS",
+            Text("NAZE SETTINGS",
                 color = textColor,
                 fontSize = 15.sp,
                 fontWeight = FontWeight.SemiBold,
@@ -170,14 +164,12 @@ fun SettingsScreen(
             item {
                 SettingsSection("CLOCK", textColor) {
                     SettingsCard(surface) {
-                        ToggleRow(
-                            "24-hour format",
+                        ToggleRow("24-hour format",
                             null,
                             settings.clock24Hour, accent, textColor
                         ) { actions.setClock24Hour(it) }
                         SettingDivider(textColor)
-                        ToggleRow(
-                            "Show seconds",
+                        ToggleRow("Show seconds",
                             null,
                             settings.clockShowSeconds, accent, textColor
                         ) { actions.setClockShowSeconds(it) }
@@ -203,8 +195,7 @@ fun SettingsScreen(
                         }
                         SettingDivider(textColor)
                         Column(Modifier.padding(horizontal = 16.dp, vertical = 12.dp)) {
-                            SettingLabel(
-                                "Naze Lock clock",
+                            SettingLabel("Naze Lock clock",
                                 "Tap the clock on Naze Lock to cycle styles",
                                 textColor
                             )
@@ -257,7 +248,8 @@ openNazeLock()
                                 ChoiceChip("5", settings.drawerColumns == 5, accent, textColor, surfaceHigh) {
                                     actions.setDrawerColumns(5)
                                 }
-                   
+                 
+  
  
             ChoiceChip("6", settings.drawerColumns == 6, accent, textColor, surfaceHigh) {
                                     actions.setDrawerColumns(6)
@@ -265,8 +257,7 @@ openNazeLock()
                             }
                         }
                         SettingDivider(textColor)
-                        ToggleRow(
-                            "Show app labels",
+                        ToggleRow("Show app labels",
                             null,
                             settings.showAppLabels, accent, textColor
                         ) { actions.setShowAppLabels(it) }
@@ -302,7 +293,8 @@ openNazeLock()
                             "Automatic location",
                             "Single GPS fix on refresh, never background tracking",
                             settings.useAutomaticLocation, accent, textColor
-                     
+                  
+   
   
  ) { actions.setAutomaticLocation(it) }
                         SettingDivider(textColor)
@@ -337,8 +329,7 @@ openNazeLock()
                 SettingsSection("ABOUT NAZE", textColor) {
                     SettingsCard(surface) {
                         Column(Modifier.padding(16.dp)) {
-                            Text(
-                                "NAZE LAUNCHER",
+                            Text("NAZE LAUNCHER",
                                 color = textColor,
                                 fontSize = 17.sp,
                                 fontWeight = FontWeight.SemiBold,
@@ -390,8 +381,7 @@ private fun SettingsSection(title: String, textColor: Color, content: @Composabl
 @Composable
 private fun SettingsCard(surface: Color, content: @Composable () -> Unit) {
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
+        modifier = Modifier.fillMaxWidth()
             .clip(RoundedCornerShape(22.dp))
             .background(surface)
             .padding(vertical = 6.dp)
@@ -425,10 +415,8 @@ alpha = 0.9f),
 @Composable
 private fun SettingDivider(textColor: Color) {
     Box(
-        Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 6.dp)
-            .height(0.6.dp)
+        Modifier.fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 6.dp).height(0.6.dp)
             .background(textColor.copy(alpha = 0.10f))
     )
 }
@@ -443,8 +431,7 @@ private fun ToggleRow(
     onToggle: (Boolean) -> Unit
 ) {
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
+        modifier = Modifier.fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 10.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -492,8 +479,7 @@ private fun PerformanceModeSelector(
             val selected = mode == current
             val interaction = remember { MutableInteractionSource() }
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
+                modifier = Modifier.fillMaxWidth()
                     .padding(vertical = 3.dp)
                     .pressScale(interaction, pressedScale = 0.98f)
                     .clip(RoundedCornerShape(14.dp))
@@ -520,7 +506,8 @@ private fun PerformanceModeSelector(
                     Text(
                         when (mode) {
                             PerformanceMode.PERFORMANCE -> "Static ambience, snappy motion — for low-end devices"
-               
+          
+     
      
         PerformanceMode.BALANCED -> "Full experience — ambient light, staggered motion"
                             PerformanceMode.BATTERY_SAVER -> "Minimal effects, maximum battery"
@@ -575,14 +562,14 @@ private fun GestureRow(
     var expanded by remember { mutableStateOf(false) }
     Column(Modifier.padding(horizontal = 12.dp, vertical = 4.dp)) {
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
+            modifier = Modifier.fillMaxWidth()
                 .clip(RoundedCornerShape(14.dp))
                 .background(surfaceHigh)
                 .clickable { expanded = !expanded }
                 .padding(horizontal = 14.dp, vertical = 11.dp),
             verticalAlignment = Alignment.CenterVertically
-        ) {
+        
+) {
   
       
     Text(
@@ -616,11 +603,9 @@ private fun GestureRow(
                 GestureAction.values().forEach { action ->
                     val selected = action == current
                     Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth()
                             .clip(RoundedCornerShape(12.dp))
-                            .background(if (selected) accent.copy(alpha = 0.12f) else Color.Transparent)
-                            .clickable {
+                            .background(if (selected) accent.copy(alpha = 0.12f) else Color.Transparent).clickable {
                                 onSelect(action)
                                 expanded = false
                             }
@@ -632,7 +617,8 @@ private fun GestureRow(
                                 NazeIcons.Check,
                                 contentDescription = null,
                                 tint = accent,
-                       
+                
+       
        
   modifier = Modifier.size(14.dp)
                             )
@@ -702,8 +688,7 @@ private fun ManualLocationFields(
 .isNotBlank() && latValid && lonValid
 
     Column(Modifier.padding(horizontal = 16.dp, vertical = 12.dp)) {
-        SettingLabel(
-            "Manual location",
+        SettingLabel("Manual location",
             "Used when automatic location is off or unavailable",
             textColor
         )
@@ -742,8 +727,7 @@ private fun ManualLocationFields(
             modifier = Modifier
                 .pressScale(interaction)
                 .clip(RoundedCornerShape(50))
-                .background(if (canSave) accent.copy(alpha = 0.16f) else surfaceHigh)
-                .clickable(
+                .background(if (canSave) accent.copy(alpha = 0.16f) else surfaceHigh).clickable(
                     interactionSource = interaction,
                     indication = null,
                     enabled = canSave
@@ -755,8 +739,7 @@ dp),
     
         verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(
-                "Save location",
+            Text("Save location",
                 color = if (canSave) accent else textColor.copy(alpha = 0.45f),
                 fontSize = 13.sp,
                 fontWeight = FontWeight.Medium,

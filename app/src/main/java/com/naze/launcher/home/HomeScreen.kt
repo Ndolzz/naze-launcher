@@ -134,6 +134,7 @@ fun HomeScreen(
     }
 
     BackHandler(enabled = overlay != null || sheet != Sheet.NONE || editApp != null) 
+
 {
         when {
             overlay != null -> overlay = null
@@ -145,7 +146,7 @@ fun HomeScreen(
     val homeScale by animateFloatAsState(
         targetValue = if (overlay == null) 1f else 0.94f,
         animationSpec = spring(
-            dampingRatio = Spring.DampingRatioMediumLow,
+            dampingRatio = Spring.DampingRatioLowBouncy,
             stiffness = 700f
         ),
         label = "homeScale"
@@ -190,7 +191,8 @@ fun HomeScreen(
         SearchAction(
             title = "Launcher settings",
             subtitle = "Customize Naze",
-            icon = NazeIcons.Settings,
+            icon = NazeIcons.Settings
+,
 
             run = { overlay = null; onOpenSettings() }
 
@@ -202,9 +204,7 @@ fun HomeScreen(
 
         // ── Home content ────────────────────────────────────────────────────────
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .graphicsLayer {
+            modifier = Modifier.fillMaxSize().graphicsLayer {
                     scaleX = homeScale
                     scaleY = homeScale
                     alpha = homeAlpha
@@ -222,9 +222,7 @@ fun HomeScreen(
             )
 
             Column(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxWidth()
+                modifier = Modifier.weight(1f).fillMaxWidth()
                     .padding(horizontal = 16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
@@ -243,7 +241,8 @@ fun HomeScreen(
                     accent = ambience.accent,
                     onRetry = { viewModel.refreshWeather(forceRefresh = true) },
                     onOpenSettings = onOpenSettings,
-               
+             
+  
      modifier = Modifier.padding(top = 14.dp)
           
       )
@@ -421,8 +420,7 @@ private fun HomeTopRow(
     onSettingsClick: () -> Unit
 ) {
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
+        modifier = Modifier.fillMaxWidth()
             .padding(horizontal = 24.dp, vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -453,7 +451,8 @@ private fun HomeTopRow(
             tint = textColor.copy(alpha = 0.85f),
             background = textColor.copy(alpha = 0.07f),
             size = 38.dp,
-      
+  
+    
       iconSize = 17.dp
         )
     }
@@ -469,8 +468,7 @@ private fun SearchPill(
 ) {
     val interaction = remember { MutableInteractionSource() }
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
+        modifier = Modifier.fillMaxWidth()
             .padding(horizontal = 24.dp)
             .pressScale(interaction, pressedScale = 0.97f)
             .clip(RoundedCornerShape(50))
@@ -520,10 +518,9 @@ private fun BoxScope.NazeSheet(
         modifier = Modifier.fillMaxSize()
     ) {
         val interaction = remember { MutableInteractionSource() }
-        Box(
-            Modifier
-                .fillMaxSize()
     
+    Box(
+            Modifier.fillMaxSize()
             .background(scrimColor)
                 .clickable(interactionSource = interaction, indication = null, onClick = onDismiss)
         )
@@ -535,13 +532,11 @@ private fun BoxScope.NazeSheet(
         ) { it },
         exit = slideOutVertically(tween(duration)) { it },
         modifier = Modifier
-            .align(Alignment.BottomCenter)
-            .fillMaxWidth()
+            .align(Alignment.BottomCenter).fillMaxWidth()
     ) {
         val interaction = remember { MutableInteractionSource() }
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
+            modifier = Modifier.fillMaxWidth()
                 .clip(RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp))
                 .background(sheetColor)
                 // Consume stray taps on the sheet body so they don't fall through
@@ -582,8 +577,7 @@ private fun QuickActionsContent(
 
     tiles.chunked(3).forEach { rowTiles ->
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
+            modifier = Modifier.fillMaxWidth()
                 .padding(top = 16.dp),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
@@ -595,7 +589,7 @@ private fun QuickActionsContent(
 }
 
 private data class QuickActionTileData(
-    val icon: androidx.compose.ui.graphics.ImageVector,
+    val icon: androidx.compose.ui.graphics.vector.ImageVector,
     val label: String,
     val active: Boolean,
     val onClick: () -> Unit
@@ -610,17 +604,13 @@ private fun QuickActionTile(
     val interaction = remember { MutableInteractionSource() }
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
-            .width(96.dp)
+        modifier = Modifier.width(96.dp)
             .pressScale(interaction, pressedScale = 0.92f)
             .clickable(interactionSource = interaction, indication = null, onClick = tile.onClick)
             .padding(vertical = 6.dp)
     ) {
         Box(
-            modifier = Modifier
-                .size(54.dp)
-                .clip(CircleShape)
-                .background(
+            modifier = Modifier.size(54.dp).clip(CircleShape).background(
                     if (tile.active) accent.copy(alpha = 0.22f)
                     else textColor.copy(alpha = 0.08f)
                 ),
@@ -629,8 +619,7 @@ private fun QuickActionTile(
             Icon(
                 tile.icon,
                 contentDescription = tile.label,
-                tint = if (tile.active) accent else textColor.copy(alpha = 0.8
-5f),
+                tint = if (tile.active) accent else textColor.copy(alpha = 0.85f),
                 modifier = Modifier.size(22.dp)
         
     )
@@ -699,8 +688,7 @@ private fun DeviceInfoContent(
 @Composable
 private fun InfoRow(label: String, value: String, textColor: Color) {
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
+        modifier = Modifier.fillMaxWidth()
             .padding(vertical = 11.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -734,8 +722,7 @@ private fun AppActionsContent(
     onAppInfo: () -> Unit
 ) {
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
+        modifier = Modifier.fillMaxWidth()
             .padding(bottom = 18.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -757,7 +744,8 @@ private fun AppActionsContent(
             Text(
                 text = app.packageName,
                 color = textColor.copy(alpha = 0.45f),
-               
+        
+       
  fontSize = 11.sp,
                 fontFamily = LocalNazeUiFont.current,
                 maxLines = 1
@@ -783,7 +771,7 @@ private fun AppActionsContent(
 
 @Composable
 private fun SheetActionRow(
-    icon: androidx.compose.ui.graphics.ImageVector,
+    icon: androidx.compose.ui.graphics.vector.ImageVector,
     label: String,
     textColor: Color,
     accent: Color,
@@ -791,8 +779,7 @@ private fun SheetActionRow(
 ) {
     val interaction = remember { MutableInteractionSource() }
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
+        modifier = Modifier.fillMaxWidth()
             .padding(vertical = 3.dp)
             .pressScale(interaction, pressedScale = 0.97f)
             .clip(RoundedCornerShape(16.dp))

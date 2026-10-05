@@ -34,7 +34,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ImageVector
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -46,7 +46,6 @@ import com.naze.launcher.ui.EmptyState
 import com.naze.launcher.ui.NazeIcons
 import com.naze.launcher.ui.SearchField
 import com.naze.launcher.ui.pressScale
-import androidx.compose.ui.graphics.vector.ImageVector
 
 /**
  * A launcher action surfaced in search — e.g. "Toggle flashlight", "Open settings".
@@ -93,11 +92,9 @@ fun QuickSearchScreen(
     LaunchedEffect(Unit) { focusRequester.requestFocus() }
 
     Column(
-        modifier = Modifier
-            .fillMaxSize()
+        modifier = Modifier.fillMaxSize()
             .background(backgroundColor)
-            .statusBarsPadding()
-            .imePadding()
+            .statusBarsPadding().imePadding()
             .padding(horizontal = 20.dp)
     ) {
         Spacer(Modifier.height(18.dp))
@@ -107,6 +104,7 @@ fun QuickSearchScreen(
             hint = "Search apps and actions",
             textColor = textColor,
     
+
         fontSize = 17.sp,
             autoFocus = true,
 
@@ -115,8 +113,7 @@ fun QuickSearchScreen(
 
         if (query.isBlank()) {
             Spacer(Modifier.height(28.dp))
-            Text(
-                "QUICK ACTIONS",
+            Text("QUICK ACTIONS",
                 color = textColor.copy(alpha = 0.45f),
                 fontSize = 11.sp,
                 fontWeight = FontWeight.Medium,
@@ -155,7 +152,8 @@ fun QuickSearchScreen(
                             AppResultRow(app, textColor) { onAppClick(app) }
                         }
                     }
-                    if (matchedActions.isNotEmpty()
+                    if (matchedActions.isNotEmpty(
+)
 ) {
                         item {
                      
@@ -188,8 +186,7 @@ private fun SectionLabel(text: String, textColor: Color) {
 private fun AppResultRow(app: AppInfo, textColor: Color, onClick: () -> Unit) {
     val interaction = remember { MutableInteractionSource() }
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
+        modifier = Modifier.fillMaxWidth()
             .pressScale(interaction, pressedScale = 0.97f)
             .clickable(interactionSource = interaction, indication = null, onClick = onClick)
             .padding(horizontal = 8.dp, vertical = 8.dp),
@@ -215,8 +212,7 @@ private fun AppResultRow(app: AppInfo, textColor: Color, onClick: () -> Unit) {
 private fun ActionRow(action: SearchAction, textColor: Color, accent: Color) {
     val interaction = remember { MutableInteractionSource() }
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
+        modifier = Modifier.fillMaxWidth()
             .pressScale(interaction, pressedScale = 0.97f)
             .clickable(interactionSource = interaction, indication = null, onClick = action.run)
           

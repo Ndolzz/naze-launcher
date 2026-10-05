@@ -11,7 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ImageVector
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -19,7 +19,6 @@ import com.naze.launcher.theme.LocalNazeUiFont
 import com.naze.launcher.ui.NazeIconButton
 import com.naze.launcher.ui.NazeIcons
 import com.naze.launcher.ui.NazeLoader
-import androidx.compose.ui.graphics.vector.ImageVector
 
 private fun conditionLabel(c: WeatherCondition): String = when (c) {
     WeatherCondition.CLEAR -> "Clear"
@@ -61,8 +60,7 @@ fun WeatherSummaryView(
         null -> Row(modifier = modifier, verticalAlignment = Alignment.CenterVertically) {
             NazeLoader(color = textColor.copy(alpha = 0.7f), dotSize = 4.dp)
             Spacer(Modifier.width(8.dp))
-            Text(
-                "Fetching weather",
+            Text("Fetching weather",
                 color = textColor.copy(alpha = 0.6f),
                 fontSize = 14.sp,
                 fontFamily = LocalNazeUiFont.current
@@ -102,6 +100,7 @@ fun WeatherSummaryView(
                     tint = accent,
                     size = 28.dp,
              
+
        iconSize = 14.dp
                 )
             }
@@ -144,14 +143,14 @@ fun WeatherSummaryView(
                 )
                 if (r.isFromCache) {
                     Spacer(Modifier.width(6.dp))
-                    Text(
-                        "cached",
+                    Text("cached",
                         color = textColor.copy(alpha = 0.38f),
                         fontSize = 11.sp,
                         fontFamily = LocalNazeUiFont.current,
                         modifier = Modifier.padding(top = 1.dp)
                     )
-   
+  
+ 
              }
             }
         }

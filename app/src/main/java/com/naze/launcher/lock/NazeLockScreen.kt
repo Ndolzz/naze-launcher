@@ -39,8 +39,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.SolidColor
-import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.SolidColorimport androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.pointer.pointerInput
@@ -117,8 +116,7 @@ fun NazeLockScreen(
         if (clock24Hour) "" else if (h24 < 12) "  ·  AM" else "  ·  PM"
 
     Box(
-        Modifier
-            .fillMaxSize()
+        Modifier.fillMaxSize()
             .background(Brush.verticalGradient(listOf(ambience.backgroundTop, ambience.backgroundBottom)))
             .pointerInput(Unit) {
                 var total = 0f
@@ -138,8 +136,7 @@ fun NazeLockScreen(
         }
 
         Column(
-            Modifier
-                .fillMaxSize(
+            Modifier.fillMaxSize(
 )
                 .statusBarsPadding()
                 .navigationBarsPadding()
@@ -199,8 +196,7 @@ fun NazeLockScreen(
             Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                 RoundAction(NazeIcons.Flash, "Flashlight", torchOn, ambience, onToggleTorch)
                 Column(
-                    Modifier
-                        .weight(1f)
+                    Modifier.weight(1f)
                         .clickable(interactionSource = remember { MutableInteractionSource() }, indication = null, onClick = onUnlock)
                         .padding(vertical = 8.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
@@ -288,9 +284,7 @@ private fun TerminalClock(h: Int, min: Int, sec: Int, showSeconds: Boolean, a: A
 @Composable
 private fun RoundAction(icon: ImageVector, label: String, active: Boolean, a: Ambience, onClick: () -> Unit) {
     Box(
-        Modifier
-            .size(52.dp)
-            .clip(CircleShape)
+        Modifier.size(52.dp).clip(CircleShape)
             .background(if (active) BrandBrush else SolidColor(a.surfaceHigh))
             .clickable(onClick = onClick),
         contentAlignment = Alignment.Center

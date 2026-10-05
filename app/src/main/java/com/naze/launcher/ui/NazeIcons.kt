@@ -23,17 +23,14 @@ object NazeIcons {
             defaultHeight = 24.dp,
             viewportWidth = 24f,
             viewportHeight = 24f
-        )
-            .path(
+        ).path(
                 name = "$name/stroke",
                 stroke = SolidColor(Color.White),
                 strokeLineWidth = 2f,
                 strokeLineCap = StrokeCap.Round,
                 strokeLineJoin = StrokeJoin.Round,
                 pathBuilder = build
-            )
-            .build()
-
+            ).build()
     private fun PathBuilder.circle(cx: Float, cy: Float, r: Float) {
         val k = r * 0.5523f
         moveTo(cx - r, cy)
@@ -166,9 +163,7 @@ object NazeIcons {
         strokeIcon("Clock") {
             circle(12f, 12f, 8.5f)
             moveTo(12f, 12f); lineTo(12f, 7.5f)
-            moveTo(12f, 12f); lineTo(15.5f, 13
-
-.5f)
+            moveTo(12f, 12f); lineTo(15.5f, 13.5f)
         }
     }
 
@@ -235,7 +230,8 @@ object NazeIcons {
         strokeIcon("Refresh") {
             moveTo(18.9f, 12f)
             curveTo(18.9f, 15.81f, 15.81f, 18.9f, 12f, 18.9f)
-            curveTo(8.19f, 18.9f, 5.1f, 15.81f, 5.1f
+            curveTo(8.19f, 18.9f, 5.1f, 15.81f, 5.
+1f
 , 12f)
             curveTo(5.1f, 8.19f, 8.19f, 5.1f, 12f, 5.1f)
             curveTo(14.9f, 5.1f, 17.4f, 6.85f, 18.5f, 9.35f)
@@ -304,9 +300,7 @@ object NazeIcons {
         strokeIcon("WeatherFog") {
             cloud()
             moveTo(7.5f, 19.5f); lineTo(16.5f, 19.5f)
-            moveTo(
-9.
-5f, 21.8f); lineTo(14.5f, 21.8f)
+            moveTo(9.5f, 21.8f); lineTo(14.5f, 21.8f)
         }
     }
 

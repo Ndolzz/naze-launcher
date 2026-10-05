@@ -66,15 +66,12 @@ fun OnboardingScreen(
     var step by remember { mutableIntStateOf(0) }
 
     Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(
+        modifier = Modifier.fillMaxSize().background(
                 Brush.verticalGradient(listOf(OnboardingBackgroundTop, OnboardingBackgroundBottom))
             )
     ) {
         Column(
-            modifier = Modifier
-                .fillMaxSize()
+            modifier = Modifier.fillMaxSize()
                 .statusBarsPadding()
                 .navigationBarsPadding()
                 .padding(horizontal = 32.dp)
@@ -92,9 +89,7 @@ fun OnboardingScreen(
 
             // Step content
             Box(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxWidth(),
+                modifier = Modifier.weight(1f).fillMaxWidth(),
                 contentAlignment = Alignment.Center
             ) {
                 AnimatedContent(
@@ -108,8 +103,7 @@ fun OnboardingScreen(
                 ) { currentStep ->
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
                         val stepData = when (currentStep) {
-                            0 -> OnboardingStepData(
-                                "Welcome to Naze",
+                            0 -> OnboardingStepData("Welcome to Naze",
                                 "A calm, adaptive home screen.\nBuilt for every day.",
                                 "Get started", null
                             )
@@ -125,8 +119,7 @@ fun OnboardingScreen(
                                 "Allow", "Not now",
                                 { onRequestLocationPermission() }
                             )
-                            3 -> OnboardingStepData(
-                                "Weather",
+                            3 -> OnboardingStepData("Weather",
                                 "Naze checks the weather when you open the home screen and caches it for offline use.",
                                 "Continue", null
                             )
@@ -135,11 +128,7 @@ fun OnboardingScreen(
                                 "12/24-hour format, clock size, gestures, drawer grid and performance mode — all in Settings.",
                                 "Continue", null
                             )
-                            else -> OnboardingStepData(
-                               
- "You're all set",
-                                "Welcome home.",
-                                "Finish", null
+                            else -> OnboardingStepData("You're all set","Welcome home.","Finish", null
                             )
                         }
                         OnboardingStep(stepData, onAdvance = { step++ }, onFinish = onFinish)
@@ -149,8 +138,7 @@ fun OnboardingScreen(
 
             // Progress dots
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
+                modifier = Modifier.fillMaxWidth()
                     .padding(bottom = 34.dp),
                 horizontalArrangement = Arrangement.Center
             ) {
@@ -160,8 +148,7 @@ fun OnboardingScreen(
                         modifier = Modifier
                             .padding(horizontal = 4.dp)
                             .size(width = if (active) 18.dp else 6.dp, height = 6.dp)
-                            .clip(RoundedCornerShape(3.dp))
-                            .background(
+                            .clip(RoundedCornerShape(3.dp)).background(
                                 if (active) OnboardingAccent
                                 else OnboardingText.copy(alpha = 0.22f)
                             )
@@ -195,6 +182,7 @@ private fun OnboardingStep(
             fontWeight = FontWeight.Medium,
             fontFamily = LocalNazeDisplayFont.current,
   
+
           textAlign = TextAlign.Center
         )
         Spacer(Modifier.height(16.dp))
@@ -237,11 +225,9 @@ private fun OnboardingButton(
 ) {
     val interaction = remember { MutableInteractionSource() }
     Box(
-        modifier = Modifier
-            .fillMaxWidth()
+        modifier = Modifier.fillMaxWidth()
             .pressScale(interaction, pressedScale = 0.97f)
-            .clip(RoundedCornerShape(50))
-            .background(
+            .clip(RoundedCornerShape(50)).background(
                 if (primary) OnboardingAccent else OnboardingText.copy(alpha = 0.08f)
             )
             .clickable(interactionSource = interaction, indication = null, onClick = onClick)

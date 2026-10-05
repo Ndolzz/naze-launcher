@@ -131,15 +131,13 @@ fun ClockView(
                                 targetState = char,
                                 transitionSpec = {
                                     (slideInVertically(tween(180, easing = LinearEasing)) { it / 3 } +
-                                        fadeIn(tween(180)))
-                                        .togetherWith(
+                                        fadeIn(tween(180))).togetherWith(
                                         slideOutVertically(tween(180, easing = LinearEasing)) { -it / 3 } +
                                             fadeOut(tween(140))
                                     )
                                 },
                                 label = "digit$index"
-                            ) { digitChar -
->
+                            ) { digitChar ->
                                 Digit(digitChar, fontSizeSp, textColor)
                             }
                         } else {

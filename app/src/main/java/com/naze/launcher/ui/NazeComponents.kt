@@ -32,7 +32,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ImageVector
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.TextStyle
@@ -41,13 +41,9 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.naze.
-
-launcher.theme.LocalNazeUiFont
+import com.naze.launcher.theme.LocalNazeUiFont
 import java.util.Locale
 import androidx.compose.animation.core.Spring
-import androidx.compose.ui.graphics.vector.ImageVector
-import com.naze.launcher.theme.LocalNazeUiFont
 
 /**
  * Shared Naze design-system components. Everything visual in the app is built from
@@ -66,7 +62,7 @@ fun Modifier.pressScale(
         targetValue = if (pressed) pressedScale else 1f,
         animationSpec = androidx.compose.animation.core.spring(
             stiffness = 1400f,
-            dampingRatio = androidx.compose.animation.core.Spring.DampingRatioMediumLow
+            dampingRatio = androidx.compose.animation.core.Spring.DampingRatioLowBouncy
         ),
         label = "pressScale"
     )
@@ -90,10 +86,8 @@ fun NazeIconButton(
 ) {
     val interaction = remember { MutableInteractionSource() }
     Box(
-        modifier = modifier
-            .size(size)
-            .pressScale(interaction)
-            .clip(CircleShape)
+        modifier = modifier.size(size)
+            .pressScale(interaction).clip(CircleShape)
             .background(background)
             .clickable(interactionSource = interaction, indication = null, onClick = onClick),
         contentAlignment = Alignment.Center
@@ -102,7 +96,8 @@ fun NazeIconButton(
             imageVector = icon,
             contentDescription = contentDescription,
             tint = tint,
-            modifier = 
+            modifier =
+ 
 Modifier.size(iconSize)
         )
     }
@@ -123,8 +118,7 @@ fun NazeChip(
     val interaction = remember { MutableInteractionSource() }
     val base = modifier
         .clip(RoundedCornerShape(50))
-        .background(background)
-        .clickable(
+        .background(background).clickable(
             interactionSource = interaction,
             indication = null,
             enabled = onClick != null,
@@ -169,7 +163,8 @@ fun NazeLoader(
         initialValue = 0f,
         targetValue = 1f,
         animationSpec = infiniteRepeatable(
-           
+         
+  
  animation = tween(durationMillis = 1100, easing = LinearEasing),
             repeatMode = RepeatMode.Restart
         ),
@@ -180,11 +175,9 @@ fun NazeLoader(
             val offset = (phase - index * 0.18f).coerceIn(0f, 1f)
             val triangle = 1f - kotlin.math.abs(offset - 0.5f) * 2f
             Box(
-                Modifier
-                    .size(dotSize)
+                Modifier.size(dotSize)
                     .graphicsLayer { alpha = 0.25f + 0.75f * triangle }
-                    .clip(CircleShape)
-                    .background(color)
+                    .clip(CircleShape).background(color)
             )
         }
     }
@@ -236,7 +229,8 @@ fun SearchField(
     autoFocus: Boolean = false
 ) {
     BasicTextField(
-        value = query,
+       
+ value = query,
         onValueChange = onQueryChange,
         singleLine = true,
         textStyle = TextStyle(
@@ -249,8 +243,7 @@ fun SearchField(
         modifier = modifier,
         decorationBox = { innerTextField ->
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
+                modifier = Modifier.fillMaxWidth()
                     .clip(RoundedCornerShape(18.dp))
                     .background(textColor.copy(alpha = 0.07f))
                     .padding(horizontal = 16.dp, vertical = 13.dp),

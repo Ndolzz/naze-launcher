@@ -36,9 +36,7 @@ class LocationProvider(private val context: Context) {
         val deferred = CompletableDeferred<GeoPoint?>()
 
         val request = CurrentLocationRequest.Builder()
-            .setPriority(Priority.PRIORITY_BALANCED_POWER_ACCURACY)
-            .build()
-
+            .setPriority(Priority.PRIORITY_BALANCED_POWER_ACCURACY).build()
         return try {
             withTimeoutOrNull(Constants.LOCATION_REQUEST_TIMEOUT_MS) {
                 client.getCurrentLocation(request, null)
