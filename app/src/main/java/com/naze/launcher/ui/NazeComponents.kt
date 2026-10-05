@@ -32,7 +32,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ImageVector
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.TextStyle
@@ -41,11 +40,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.naze.
-
-
-
-launcher.theme.LocalNazeUiFont
 import java.util.Locale
 import androidx.compose.animation.core.Spring
 import com.naze.launcher.theme.LocalNazeUiFont
@@ -69,7 +63,7 @@ fun Modifier.pressScale(
         targetValue = if (pressed) pressedScale else 1f,
         animationSpec = androidx.compose.animation.core.spring(
             stiffness = 1400f,
-            dampingRatio = androidx.compose.animation.core.Spring.DampingRatioMediumLow
+            dampingRatio = androidx.compose.animation.core.Spring.DampingRatioLowBouncy
         ),
         label = "pressScale"
     )
@@ -103,6 +97,7 @@ fun NazeIconButton(
             imageVector = icon,
             contentDescription = contentDescription,
             tint = tint,
+
             modifier =
  
 Modifier.size(iconSize
@@ -170,11 +165,11 @@ fun NazeLoader(
     val phase by transition.animateFloat(
         initialValue = 0f,
         targetValue = 1f,
-        animationSpec = infiniteRepeatable(
+        animationSpec = infiniteRepea
+table(
          
   
- animation = tween(durationMi
-llis = 1100, easing = LinearEasing),
+ animation = tween(durationMillis = 1100, easing = LinearEasing),
             repeatMode = RepeatMode.Restart
         ),
         label = "nazeLoaderPhase"
@@ -240,7 +235,8 @@ fun SearchField(
     BasicTextField(
        
  value = query,
-        onValueChange = onQueryChange,
+       
+ onValueChange = onQueryChange,
         singleLine
  = true,
         textStyle = TextStyle(

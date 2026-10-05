@@ -11,7 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ImageVector
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -47,8 +47,7 @@ fun WeatherCondition.icon(): ImageVector = when (this) {
  * retry, or points to Settings when an API key is missing.
  */
 @Composable
-fun WeatherSu
-mmaryView(
+fun WeatherSummaryView(
     result: WeatherResult?,
     useFahrenheit: Boolean,
     textColor: Color,
