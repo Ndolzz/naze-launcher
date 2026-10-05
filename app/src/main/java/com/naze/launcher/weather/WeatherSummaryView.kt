@@ -102,7 +102,8 @@ fun WeatherSummaryView(
                     size = 28.dp,
                     iconSize = 14.dp
                 )
-            } else {
+            }
+ else {
                 NazeIconButton(
                     icon = NazeIcons.Refresh,
                     contentDescription = "Retry weather fetch",

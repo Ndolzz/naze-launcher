@@ -44,7 +44,8 @@ data class ClockDisplay(val time: String, val date: String)
 
 /**
  * Produces a formatted time/date string that updates every second (or every minute if
- * seconds aren't shown) — isolated in its own small state holder so only this composable
+ * seconds aren't shown) — isolated in its own small state holder so only
+ this composable
  * recomposes on tick, never the full home screen tree.
  */
 @Composable

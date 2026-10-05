@@ -6,7 +6,6 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
-import android.service.notification.StatusBarManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
@@ -45,7 +44,8 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             NazeLauncherTheme {
-                val settings by preferencesRepository.settings.collectAsState(initial = null)
+                val settings by preferencesRepository.settings.collectAsState(initial =
+ null)
 
                 when (settings?.onboardingComplete) {
                     null -> Unit // still loading initial DataStore read
@@ -106,8 +106,12 @@ class MainActivity : ComponentActivity() {
      * HOME role holder, which a launcher by definition is (or is asking to be).
      */
     private fun expandNotifications() {
-        val statusBar = getSystemService(StatusBarManager::class.java)
-        runCatching { statusBar?.expandNotificationsPanel() }
+        // StatusBarManager.expandNotificationsPanel() is not part of the public SDK,
+        // so reach the statusbar system service through reflection instead.
+        runCatching {
+            val service = getSystemService("statusbar") ?: return
+            service.javaClass.getMethod("expandNotificationsPanel").invoke(service)
+        }
     }
 
     /** Every [SystemIntent] maps to a real system capability — no dead ends. */

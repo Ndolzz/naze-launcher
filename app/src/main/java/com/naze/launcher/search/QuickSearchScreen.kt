@@ -107,6 +107,7 @@ fun QuickSearchScreen(
             textColor = textColor,
             fontSize = 17.sp,
             autoFocus = true,
+
             modifier = Modifier.focusRequester(focusRequester)
         )
 
@@ -154,7 +155,8 @@ fun QuickSearchScreen(
                     }
                     if (matchedActions.isNotEmpty()) {
                         item {
-                            SectionLabel("ACTIONS", textColor)
+                     
+       SectionLabel("ACTIONS", textColor)
                         }
                         items(matchedActions, key = { it.title }) { action ->
                             ActionRow(action, textColor, accent)
@@ -214,7 +216,8 @@ private fun ActionRow(action: SearchAction, textColor: Color, accent: Color) {
             .fillMaxWidth()
             .pressScale(interaction, pressedScale = 0.97f)
             .clickable(interactionSource = interaction, indication = null, onClick = action.run)
-            .padding(horizontal = 8.dp, vertical = 8.dp),
+          
+  .padding(horizontal = 8.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(

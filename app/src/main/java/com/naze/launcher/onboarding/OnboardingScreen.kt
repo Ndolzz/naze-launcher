@@ -23,6 +23,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -98,7 +101,8 @@ fun OnboardingScreen(
                     targetState = step,
                     transitionSpec = {
                         (fadeIn(tween(240)) + slideInVertically(tween(240)) { it / 16 })
-                            .togetherWith(fadeOut(tween(140)))
+                      
+      .togetherWith(fadeOut(tween(140)))
                     },
                     label = "onboardingStep"
                 ) { currentStep ->
@@ -132,7 +136,8 @@ fun OnboardingScreen(
                                 "Continue", null
                             )
                             else -> OnboardingStepData(
-                                "You're all set",
+                               
+ "You're all set",
                                 "Welcome home.",
                                 "Finish", null
                             )
@@ -193,7 +198,8 @@ private fun OnboardingStep(
         )
         Spacer(Modifier.height(16.dp))
         Text(
-            text = data.body,
+            text = 
+data.body,
             color = OnboardingText.copy(alpha = 0.62f),
             fontSize = 15.sp,
             lineHeight = 23.sp,

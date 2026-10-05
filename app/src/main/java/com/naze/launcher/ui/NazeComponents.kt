@@ -41,7 +41,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.naze.launcher.theme.LocalNazeUiFont
+import com.naze.
+launcher.theme.LocalNazeUiFont
 import java.util.Locale
 
 /**
@@ -105,7 +106,8 @@ fun NazeIconButton(
 /** Small pill with optional icon — used for chips, hints and status bits. */
 @Composable
 fun NazeChip(
-    text: String,
+  
+  text: String,
     modifier: Modifier = Modifier,
     icon: ImageVector? = null,
     tint: Color = Color.White,
@@ -233,7 +235,8 @@ fun SearchField(
         singleLine = true,
         textStyle = TextStyle(
             color = textColor,
-            fontSize = fontSize,
+         
+   fontSize = fontSize,
             fontFamily = LocalNazeUiFont.current
         ),
         cursorBrush = SolidColor(textColor.copy(alpha = 0.7f)),

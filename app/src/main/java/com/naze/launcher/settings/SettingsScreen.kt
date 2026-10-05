@@ -95,6 +95,7 @@ fun SettingsScreen(
 
     Column(
         modifier = Modifier
+
             .fillMaxSize()
             .statusBarsPadding()
             .imePadding()
@@ -254,7 +255,8 @@ fun SettingsScreen(
                                 ChoiceChip("5", settings.drawerColumns == 5, accent, textColor, surfaceHigh) {
                                     actions.setDrawerColumns(5)
                                 }
-                                ChoiceChip("6", settings.drawerColumns == 6, accent, textColor, surfaceHigh) {
+                    
+            ChoiceChip("6", settings.drawerColumns == 6, accent, textColor, surfaceHigh) {
                                     actions.setDrawerColumns(6)
                                 }
                             }
@@ -297,7 +299,8 @@ fun SettingsScreen(
                             "Automatic location",
                             "Single GPS fix on refresh, never background tracking",
                             settings.useAutomaticLocation, accent, textColor
-                        ) { actions.setAutomaticLocation(it) }
+                       
+ ) { actions.setAutomaticLocation(it) }
                         SettingDivider(textColor)
                         ToggleRow(
                             "Use °F instead of °C",
@@ -396,7 +399,8 @@ private fun SettingsCard(surface: Color, content: @Composable () -> Unit) {
 private fun SettingLabel(title: String, subtitle: String?, textColor: Color) {
     Text(
         title,
-        color = textColor.copy(alpha = 0.9f),
+        color = textColor.copy(
+alpha = 0.9f),
         fontSize = 14.sp,
         fontWeight = FontWeight.Medium,
         fontFamily = LocalNazeUiFont.current,
@@ -463,7 +467,8 @@ private fun ToggleRow(
                 checkedTrackColor = accent,
                 checkedThumbColor = Color.White,
                 uncheckedTrackColor = textColor.copy(alpha = 0.15f),
-                uncheckedThumbColor = textColor.copy(alpha = 0.7f)
+                uncheckedThumbColor = textColor.copy(
+alpha = 0.7f)
             )
         )
     }
@@ -510,7 +515,8 @@ private fun PerformanceModeSelector(
                     Text(
                         when (mode) {
                             PerformanceMode.PERFORMANCE -> "Static ambience, snappy motion — for low-end devices"
-                            PerformanceMode.BALANCED -> "Full experience — ambient light, staggered motion"
+                    
+        PerformanceMode.BALANCED -> "Full experience — ambient light, staggered motion"
                             PerformanceMode.BATTERY_SAVER -> "Minimal effects, maximum battery"
                         },
                         color = textColor.copy(alpha = 0.5f),
@@ -571,7 +577,8 @@ private fun GestureRow(
                 .padding(horizontal = 14.dp, vertical = 11.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(
+        
+    Text(
                 trigger.label(),
                 color = textColor.copy(alpha = 0.9f),
                 fontSize = 14.sp,
@@ -618,7 +625,8 @@ private fun GestureRow(
                                 NazeIcons.Check,
                                 contentDescription = null,
                                 tint = accent,
-                                modifier = Modifier.size(14.dp)
+                              
+  modifier = Modifier.size(14.dp)
                             )
                             Spacer(Modifier.width(8.dp))
                         }
@@ -682,7 +690,8 @@ private fun ManualLocationFields(
     }
     val latValid = lat.toDoubleOrNull() != null && (lat.toDoubleOrNull()!! in -90.0..90.0)
     val lonValid = lon.toDoubleOrNull() != null && (lon.toDoubleOrNull()!! in -180.0..180.0)
-    val canSave = name.isNotBlank() && latValid && lonValid
+    val canSave = name
+.isNotBlank() && latValid && lonValid
 
     Column(Modifier.padding(horizontal = 16.dp, vertical = 12.dp)) {
         SettingLabel(
@@ -734,7 +743,8 @@ private fun ManualLocationFields(
                     onSave(name.trim(), lat.toDouble(), lon.toDouble())
                 }
                 .padding(horizontal = 18.dp, vertical = 9.dp),
-            verticalAlignment = Alignment.CenterVertically
+    
+        verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
                 "Save location",

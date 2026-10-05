@@ -96,7 +96,8 @@ object ThemeEngine {
             backgroundTop = lighten(base.backgroundTop, 0.03f)
         )
         WeatherCondition.CLOUDY -> base.copy(
-            backgroundTop = desaturate(base.backgroundTop, 0.88f),
+     
+       backgroundTop = desaturate(base.backgroundTop, 0.88f),
             backgroundBottom = desaturate(base.backgroundBottom, 0.92f)
         )
         WeatherCondition.RAIN -> base.copy(
@@ -145,7 +146,8 @@ object ThemeEngine {
     private fun darken(c: Color, amount: Float): Color = lighten(c, -amount)
 
     private fun desaturate(c: Color, factor: Float): Color {
-        val gray = (c.red + c.green + c.blue) / 3f
+ 
+       val gray = (c.red + c.green + c.blue) / 3f
         return Color(
             red = c.red + (gray - c.red) * (1 - factor),
             green = c.green + (gray - c.green) * (1 - factor),

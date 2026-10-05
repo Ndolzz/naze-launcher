@@ -104,7 +104,8 @@ class DeviceStatusMonitor(private val context: Context) {
     }
 
     suspend fun snapshot(): DeviceSnapshot = withContext(Dispatchers.IO) {
-        val activityManager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+        val activityManager = context.get
+SystemService(Context.ACTIVITY_SERVICE) as ActivityManager
         val memoryInfo = ActivityManager.MemoryInfo()
         activityManager.getMemoryInfo(memoryInfo)
 

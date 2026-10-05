@@ -46,6 +46,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     private val locationProvider = LocationProvider(application)
     private val deviceStatusMonitor = DeviceStatusMonitor(application)
 
+
     /** Rebuilt whenever the user saves a different OpenWeatherMap key in Settings. */
     private var weatherRepository: WeatherRepository? = null
     private var lastApiKey: String? = null
@@ -93,7 +94,8 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
     fun toggleTorch(): Boolean = deviceStatusMonitor.toggleTorch()
 
-    suspend fun deviceSnapshot(): DeviceSnapshot = deviceStatusMonitor.snapshot()
+    suspend fun deviceSnapshot(): DeviceSnapshot
+ = deviceStatusMonitor.snapshot()
 
     /** Re-scan installed apps (called from onResume so new installs show up). */
     fun refreshApps() {

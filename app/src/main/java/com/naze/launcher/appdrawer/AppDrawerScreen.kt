@@ -47,9 +47,7 @@ import com.naze.launcher.ui.NazeIconButton
 import com.naze.launcher.ui.NazeIcons
 import com.naze.launcher.ui.SearchField
 import com.naze.launcher.ui.pressScale
-import kotlinx.coroutines.delay
-
-enum class AppSortMode { NAME, RECENT }
+import kotlinx.coroutines.delayenum class AppSortMode { NAME, RECENT }
 
 /**
  * The modern Naze app drawer: a consistent responsive grid with proportional icon
@@ -100,7 +98,8 @@ fun AppDrawerScreen(
 
         Row(verticalAlignment = Alignment.CenterVertically) {
             SearchField(
-                query = query,
+                query =
+ query,
                 onQueryChange = { query = it },
                 hint = "Search apps",
                 textColor = textColor,
@@ -150,7 +149,8 @@ fun AppDrawerScreen(
                 verticalArrangement = Arrangement.spacedBy(14.dp)
             ) {
                 items(filtered, key = { it.packageName }) { app ->
-                    val index = filtered.indexOf(app)
+                    val index = 
+filtered.indexOf(app)
                     AppGridItem(
                         app = app,
                         index = index,
@@ -216,7 +216,8 @@ private fun AppGridItem(
             modifier = Modifier.size(56.dp)
         )
         if (showLabel) {
-            Spacer(Modifier.height(6.dp))
+         
+   Spacer(Modifier.height(6.dp))
             Text(
                 text = app.label,
                 color = textColor.copy(alpha = 0.88f),

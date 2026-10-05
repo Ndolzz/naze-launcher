@@ -6,11 +6,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.googlefonts.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.googlefonts.GoogleFont
@@ -74,7 +75,7 @@ fun NazeLauncherTheme(content: @Composable () -> Unit) {
         runCatching {
             GoogleFont.Provider(
                 providerAuthority = "com.google.android.gms.fonts",
-                package_ = "com.google.android.gms",
+                providerPackage = "com.google.android.gms",
                 certificates = R.array.com_google_android_gms_fonts_certs
             )
         }.getOrNull()
@@ -89,7 +90,8 @@ fun NazeLauncherTheme(content: @Composable () -> Unit) {
             fontWeight = FontWeight.Light,
             fontSize = 96.sp,
             letterSpacing = (-3).sp
-        ),
+      
+  ),
         displayMedium = TextStyle(
             fontFamily = display,
             fontWeight = FontWeight.Light,

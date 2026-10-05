@@ -65,7 +65,8 @@ class SettingsActivity : ComponentActivity() {
                             lifecycleScope.launch { repository.setManualLocation(name, lat, lon) }
                         },
                         setGestureAction = { trigger, action ->
-                            lifecycleScope.launch { repository.setGestureAction(trigger, action) }
+                            lifecycleScope.launch { repository.setGestureAction(trigger,
+ action) }
                         }
                     ),
                     onBack = { finish() },

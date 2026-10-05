@@ -134,7 +134,8 @@ fun HomeScreen(
 
     BackHandler(enabled = overlay != null || sheet != Sheet.NONE || editApp != null) {
         when {
-            overlay != null -> overlay = null
+            overlay != null -> overlay
+ = null
             editApp != null -> editApp = null
             else -> sheet = Sheet.NONE
         }
@@ -190,6 +191,7 @@ fun HomeScreen(
             subtitle = "Customize Naze",
             icon = NazeIcons.Settings,
             run = { overlay = null; onOpenSettings() }
+
         )
     )
 
@@ -240,7 +242,8 @@ fun HomeScreen(
                     onRetry = { viewModel.refreshWeather(forceRefresh = true) },
                     onOpenSettings = onOpenSettings,
                     modifier = Modifier.padding(top = 14.dp)
-                )
+          
+      )
             }
 
             SearchPill(
@@ -289,7 +292,8 @@ fun HomeScreen(
             exit = fadeOut(tween((sheetDuration * 0.6f).toInt())) +
                 slideOutVertically(tween((sheetDuration * 0.6f).toInt())) { it / 16 },
             modifier = Modifier.fillMaxSize()
-        ) {
+    
+    ) {
             AppDrawerScreen(
                 apps = state.allApps,
                 recentPackageNames = state.recentPackages,
@@ -338,7 +342,8 @@ fun HomeScreen(
         // Always composed so closing plays the slide/fade exit animation; the
         // content simply switches between the two sheet types.
         NazeSheet(
-            visible = sheet != Sheet.NONE,
+  
+          visible = sheet != Sheet.NONE,
             duration = sheetDuration,
             sheetColor = ambience.backgroundBottom,
             scrimColor = Color.Black.copy(alpha = 0.45f),
@@ -384,7 +389,8 @@ fun HomeScreen(
                     accent = ambience.accent,
                     onDockToggle = {
                         if (app.packageName in settings.dockPackages) {
-                            viewModel.removeFromDock(app)
+                     
+       viewModel.removeFromDock(app)
                         } else {
                             viewModel.addToDock(app)
                         }
@@ -448,7 +454,8 @@ private fun HomeTopRow(
     }
 }
 
-// ── Search pill ─────────────────────────────────────────────────────────────────
+// ── Search pill 
+─────────────────────────────────────────────────────────────────
 
 @Composable
 private fun SearchPill(
@@ -512,7 +519,8 @@ private fun BoxScope.NazeSheet(
         Box(
             Modifier
                 .fillMaxSize()
-                .background(scrimColor)
+    
+            .background(scrimColor)
                 .clickable(interactionSource = interaction, indication = null, onClick = onDismiss)
         )
     }
@@ -618,7 +626,8 @@ private fun QuickActionTile(
                 contentDescription = tile.label,
                 tint = if (tile.active) accent else textColor.copy(alpha = 0.85f),
                 modifier = Modifier.size(22.dp)
-            )
+        
+    )
         }
         Spacer(Modifier.height(8.dp))
         Text(
