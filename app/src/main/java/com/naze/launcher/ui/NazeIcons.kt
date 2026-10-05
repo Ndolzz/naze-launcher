@@ -5,7 +5,6 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.StrokeJoin
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.graphics.vector.PathBuilder
 import androidx.compose.ui.graphics.vector.PathNode
 import androidx.compose.ui.unit.dp
 
@@ -17,7 +16,7 @@ import androidx.compose.ui.unit.dp
  */
 object NazeIcons {
 
-    private fun strokeIcon(name: String, build: PathBuilder.() -> Unit): ImageVector =
+    private fun strokeIcon(name: String, build: NodeBuilder.() -> Unit): ImageVector =
         ImageVector.Builder(
             name = name,
             defaultWidth = 24.dp,
@@ -25,23 +24,33 @@ object NazeIcons {
             viewportWidth = 24f,
             viewportHeight = 24f
         ).addPath(
-            pathData = buildNodes(build),
+            pathData = NodeBuilder().apply(build).nodes,
             name = "$name/stroke",
             stroke = SolidColor(Color.White),
             strokeLineWidth = 2f,
             strokeLineCap = StrokeCap.Round,
             strokeLineJoin = StrokeJoin.Round
         ).build()
-    private fun buildNodes(build: PathBuilder.() -> Unit): List<PathNode> {
-        val pb = PathBuilder()
-        pb.build()
-        val field = PathBuilder::class.java.getDeclaredField("nodes")
-        field.isAccessible = true
-        @Suppress("UNCHECKED_CAST")
-        return field.get(pb) as List<PathNode>
+    /**
+     * A tiny path recorder built ONLY on public API (PathNode). We deliberately do not
+     * poke into the platform builder's private internals: reflecting at its node list
+     * crashed at runtime with NoSuchFieldException on the bundled Compose version.
+     */
+    private class NodeBuilder {
+        val nodes = mutableListOf<PathNode>()
+
+        fun moveTo(x: Float, y: Float) { nodes.add(PathNode.MoveTo(x, y)) }
+        fun lineTo(x: Float, y: Float) { nodes.add(PathNode.LineTo(x, y)) }
+        fun curveTo(x1: Float, y1: Float, x2: Float, y2: Float, x3: Float, y3: Float) {
+            nodes.add(PathNode.CurveTo(x1, y1, x2, y2, x3, y3))
+        }
+        fun quadTo(x1: Float, y1: Float, x2: Float, y2: Float) {
+            nodes.add(PathNode.QuadTo(x1, y1, x2, y2))
+        }
+        fun close() { nodes.add(PathNode.Close) }
     }
 
-    private fun PathBuilder.circle(cx: Float, cy: Float, r: Float) {
+    private fun NodeBuilder.circle(cx: Float, cy: Float, r: Float) {
         val k = r * 0.5523f
         moveTo(cx - r, cy)
         curveTo(cx - r, cy - k, cx - k, cy - r, cx, cy - r)
@@ -50,10 +59,10 @@ object NazeIcons {
         curveTo(cx + k, cy + r, cx - r, cy + k, cx - r, cy)
     }
 
-    private fun PathBuilder.dot(cx: Float, cy: Float, r: Float = 1.1f) = circle(cx, cy, r)
+    private fun NodeBuilder.dot(cx: Float, cy: Float, r: Float = 1.1f) = circle(cx, cy, r)
 
     /** Shared cloud silhouette used by the weather glyph family. */
-    private fun PathBuilder.cloud() {
+    private fun NodeBuilder.cloud() {
         moveTo(6.4f, 17.3f)
         quadTo(4.1f, 17.3f, 4.1f, 15.1f)
         quadTo(4.1f, 13.0f, 6.2f, 12.7f)
