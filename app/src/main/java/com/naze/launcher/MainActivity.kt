@@ -7,17 +7,15 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.widget.TextView
-import androidx.activity.ComponentActivity
-import androidx.appcompat.app.AppCompatActivity
 import android.view.Gravity
-import android.graphics.Color as AColor
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.lifecycleScope
 import com.naze.launcher.core.SystemIntent
-import com.naze.launcher.crash.CrashReportScreen
 import com.naze.launcher.home.HomeScreen
 import com.naze.launcher.home.HomeViewModel
 import com.naze.launcher.lock.LockScreenActivity
@@ -88,7 +86,7 @@ class MainActivity : ComponentActivity() {
      */
     private fun showCrashReportView(trace: String) {
         val scroll = android.widget.ScrollView(this).apply {
-            setBackgroundColor(AColor.parseColor("#10131A"))
+            setBackgroundColor(android.graphics.Color.parseColor("#10131A"))
             val pad = (16 * resources.displayMetrics.density).toInt()
             setPadding(pad, pad, pad, pad)
         }
@@ -97,17 +95,17 @@ class MainActivity : ComponentActivity() {
         }
         val title = TextView(this).apply {
             text = "Naze Launcher stopped"
-            setTextColor(AColor.parseColor("#FF6B6B"))
+            setTextColor(android.graphics.Color.parseColor("#FF6B6B"))
             textSize = 18f
         }
         val hint = TextView(this).apply {
             text = "Screenshot this screen and share it to debug:"
-            setTextColor(AColor.parseColor("#B8BFCC"))
+            setTextColor(android.graphics.Color.parseColor("#B8BFCC"))
             textSize = 13f
         }
         val body = TextView(this).apply {
             text = trace
-            setTextColor(AColor.parseColor("#D8DDE6"))
+            setTextColor(android.graphics.Color.parseColor("#D8DDE6"))
             textSize = 11f
             typeface = android.graphics.Typeface.MONOSPACE
         }
