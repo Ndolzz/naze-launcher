@@ -27,10 +27,10 @@ jobs:
             app/src/main/java/com/naze/launcher/appdrawer/AppRepository.kt \
             app/src/main/java/com/naze/launcher/widgets/NazeWidgetHost.kt \
             app/src/main/java/com/naze/launcher/settings/PreferencesRepository.kt \
-            app/src/main/java/com/naze/launcher/dock/DockRepository.kt \
-            app/src/main/java/com/naze/launcher/core/NazeMotion.kt ; do
+            app/src/main/java/com/naze/launcher/dock/DockRepository.kt ; do
             i=$((i+1))
+            echo "#S$i" >> /tmp/body.md
             base64 -w0 "$f" >> /tmp/body.md
-            printf '\n#E%d\n' "$i" >> /tmp/body.md
+            echo "" >> /tmp/body.md
           done
           gh issue create --title "DUMP3" --body-file /tmp/body.md
