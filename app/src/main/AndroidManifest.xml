@@ -72,6 +72,16 @@
             android:turnScreenOn="true"
             android:theme="@style/Theme.NazeLauncher.Home" />
 
+        <!-- SPEC 4.3 — the quick shade: real notifications, QS tiles, brightness.
+             Opened from the home notification gesture; excluded from recents. -->
+        <activity
+            android:name=".shade.ShadeActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:launchMode="singleInstance"
+            android:excludeFromRecents="true"
+            android:theme="@style/Theme.NazeLauncher.Home" />
+
         <!-- Launcher settings — runs in its own task so the system back gesture
              dismisses it independently of the home screen. -->
         <activity
@@ -80,6 +90,17 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.NazeLauncher.Settings" />
 
+        <!-- SPEC 4.3 — real notifications in the shade. Requires the user to grant
+             notification access in system settings; the shade shows an honest
+             "enable access" card until then. -->
+        <service
+            android:name=".notifications.NazeNotificationListener"
+            android:exported="false"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.notification.NotificationListenerService" />
+            </intent-filter>
+        </service>
+
     </application>
 </manifest>
-

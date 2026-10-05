@@ -22,6 +22,7 @@ import com.naze.launcher.lock.LockScreenActivity
 import com.naze.launcher.onboarding.OnboardingScreen
 import com.naze.launcher.settings.PreferencesRepository
 import com.naze.launcher.settings.SettingsActivity
+import com.naze.launcher.shade.ShadeActivity
 import com.naze.launcher.theme.NazeLauncherTheme
 import kotlinx.coroutines.launch
 import java.io.File
@@ -156,10 +157,9 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun expandNotifications() {
-        runCatching {
-            val service = getSystemService("statusbar") ?: return
-            service.javaClass.getMethod("expandNotificationsPanel").invoke(service)
-        }
+        // SPEC 4.3 — the notification gesture opens Naze's own quick-shade
+        // (real notifications + QS tiles + brightness) instead of the system panel.
+        startActivity(Intent(this, ShadeActivity::class.java))
     }
 
     private fun performSystemAction(action: SystemIntent, packageName: String?) {
