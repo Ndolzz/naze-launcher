@@ -22,8 +22,6 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          {
-            echo '### Failed step output'
-            grep -n -i -B3 -A12 'error:' build.log | head -c 60000
-          } > /tmp/body.md
-          gh issue create --title "BUILD ERROR DUMP" --body-file /tmp/body.md
+          grep -n -B5 -A20 '^e: \|FAILURE\|error:' build.log | head -c 60000 > /tmp/body.md
+          if [ ! -s /tmp/body.md ]; then cp build.log /tmp/body.md; fi
+          gh issue create --title "BUILD ERROR DUMP 2" --body-file /tmp/body.md
