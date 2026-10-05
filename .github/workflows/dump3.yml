@@ -1,0 +1,36 @@
+name: Dump files 3
+on: [push, workflow_dispatch]
+permissions:
+  issues: write
+  contents: read
+jobs:
+  dump:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Dump base64
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mkdir -p /tmp/d
+          i=0
+          for f in \
+            app/src/main/java/com/naze/launcher/home/HomeViewModel.kt \
+            app/src/main/java/com/naze/launcher/home/HomeScreen.kt \
+            app/src/main/java/com/naze/launcher/clock/ClockView.kt \
+            app/src/main/java/com/naze/launcher/gestures/GestureModifier.kt \
+            app/src/main/java/com/naze/launcher/gestures/Gestures.kt \
+            app/src/main/java/com/naze/launcher/weather/WeatherRepository.kt \
+            app/src/main/java/com/naze/launcher/weather/OpenWeatherMapApi.kt \
+            app/src/main/java/com/naze/launcher/weather/WeatherModels.kt \
+            app/src/main/java/com/naze/launcher/location/LocationProvider.kt \
+            app/src/main/java/com/naze/launcher/appdrawer/AppRepository.kt \
+            app/src/main/java/com/naze/launcher/widgets/NazeWidgetHost.kt \
+            app/src/main/java/com/naze/launcher/settings/PreferencesRepository.kt \
+            app/src/main/java/com/naze/launcher/dock/DockRepository.kt \
+            app/src/main/java/com/naze/launcher/core/NazeMotion.kt ; do
+            i=$((i+1))
+            base64 -w0 "$f" >> /tmp/body.md
+            printf '\n#E%d\n' "$i" >> /tmp/body.md
+          done
+          gh issue create --title "DUMP3" --body-file /tmp/body.md
