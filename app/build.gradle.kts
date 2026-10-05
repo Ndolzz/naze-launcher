@@ -64,8 +64,7 @@ dependencies {
     implementation("androidx.compose.animation:animation")
 
     // Settings persistence â DataStore Preferences (lightweight, Jetpack-native)
-    implementation("androidx.data
-store:datastore-preferences:1.1.1")
+    implementation("androidx.datastore:datastore-preferences:1.1.1")
 
     // Optional but small: fused location for GPS-based weather lookup.
     // Entirely optional at runtime â app works with manual location if this permission/service is unavailable.
