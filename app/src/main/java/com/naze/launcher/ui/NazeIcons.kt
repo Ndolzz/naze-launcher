@@ -23,7 +23,7 @@ object NazeIcons {
             defaultHeight = 24.dp,
             viewportWidth = 24f,
             viewportHeight = 24f
-        ).path(
+        ).addPath(
                 name = "$name/stroke",
                 stroke = SolidColor(Color.White),
                 strokeLineWidth = 2f,
@@ -230,8 +230,7 @@ object NazeIcons {
         strokeIcon("Refresh") {
             moveTo(18.9f, 12f)
             curveTo(18.9f, 15.81f, 15.81f, 18.9f, 12f, 18.9f)
-            curveTo(8.19f, 18.9f, 5.1f, 15.81f, 5.1f
-, 12f)
+            curveTo(8.19f, 18.9f, 5.1f, 15.81f, 5.1f, 12f)
             curveTo(5.1f, 8.19f, 8.19f, 5.1f, 12f, 5.1f)
             curveTo(14.9f, 5.1f, 17.4f, 6.85f, 18.5f, 9.35f)
             moveTo(18.9f, 4.6f); lineTo(18.6f, 9.5f); lineTo(13.7f, 9.2f)

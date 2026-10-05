@@ -39,7 +39,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.SolidColorimport androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.pointer.pointerInput
@@ -138,7 +139,8 @@ fun NazeLockScreen(
         Column(
             Modifier.fillMaxSize(
 )
-                .statusBarsPadding()
+                .statusBars
+Padding()
                 .navigationBarsPadding()
                 .padding(horizontal = 24.dp, vertical = 16.dp)
         ) {
@@ -176,7 +178,8 @@ fun NazeLockScreen(
             Spacer(Modifier.height(32.dp))
 
             // Tap the clock to cycle styles; the choice is persisted (Settings → Clock).
-            Box(Modifier.pointerInput(Unit) { detectTapGestures(onTap = { onCycleClock() }) }) {
+            Box(Modifier.pointerInput(Unit) { detectTapGestures(onTap = { onCycleClock() 
+}) }) {
                 when (clockStyle) {
                     LockClockStyle.STACK -> StackClock("%02d".format(shownHour), "%02d".format(min), ambience.onBackground, display)
                     LockClockStyle.ANALOG -> AnalogClock(h24, min, sec, showSeconds, ambience)
@@ -262,7 +265,8 @@ private fun TerminalClock(h: Int, min: Int, sec: Int, showSeconds: Boolean, a: A
     val time = if (showSeconds) "%02d:%02d:%02d".format(h, min, sec) else "%02d:%02d".format(h, min)
     val cursorAlpha = if (blink) {
         val transition = rememberInfiniteTransition(label = "cursor")
-        val v by transition.animateFloat(
+        val 
+v by transition.animateFloat(
             1f, 0f, infiniteRepeatable(tween(500), RepeatMode.Reverse), label = "cursorAlpha"
         )
         v

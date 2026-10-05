@@ -88,7 +88,8 @@ private enum class Sheet { NONE, QUICK_ACTIONS, DEVICE_INFO }
  *
  *   top     NAZE wordmark · battery chip · settings
  *   center  the clock (the centerpiece) + honest weather line
- *   bottom  search pill · favorite dock · swipe hint
+ *   bottom  sear
+ch pill · favorite dock · swipe hint
  *
  * Drawer and search render as full-screen overlays behind which the home content
  * scales down and dims; quick actions, device info and per-app actions live in
@@ -135,6 +136,7 @@ fun HomeScreen(
 
     BackHandler(enabled = overlay != null || sheet != Sheet.NONE || editApp != null) 
 
+
 {
         when {
             overlay != null -> overlay = null
@@ -146,7 +148,7 @@ fun HomeScreen(
     val homeScale by animateFloatAsState(
         targetValue = if (overlay == null) 1f else 0.94f,
         animationSpec = spring(
-            dampingRatio = Spring.DampingRatioMediumLow,
+            dampingRatio = Spring.DampingRatioLowBouncy,
             stiffness = 700f
         ),
         label = "homeScale"
@@ -191,7 +193,8 @@ fun HomeScreen(
         SearchAction(
             title = "Launcher settings",
             subtitle = "Customize Naze",
-            icon = NazeIcons.Settings
+            icon = NazeIcons.Setting
+s
 ,
 
             run = { overlay = null; onOpenSettings() }
@@ -246,7 +249,8 @@ fun HomeScreen(
      modifier = Modifier.padding(top = 14.dp)
           
       )
-            }
+     
+       }
 
             SearchPill(
                 textColor = ambience.onBackground,
@@ -297,7 +301,8 @@ fun HomeScreen(
             modifier = Modifier.fillMaxSize()
     
     ) {
-            AppDrawerScreen(
+   
+         AppDrawerScreen(
                 apps = state.allApps,
                 recentPackageNames = state.recentPackages,
                 sortMode = settings.drawerSort,
@@ -346,7 +351,8 @@ fun HomeScreen(
         // content simply switches between the two sheet types.
         NazeSheet(
   
-          visible = sheet != Sheet.NONE,
+          
+visible = sheet != Sheet.NONE,
             duration = sheetDuration,
             sheetColor = ambience.backgroundBottom,
             scrimColor = Color.Black.copy(alpha = 0.45f),
@@ -392,8 +398,7 @@ fun HomeScreen(
                     accent = ambience.accent,
                     onDockToggle = {
                         if (app.packageName in settings.dockPackages) {
-                     
-       viewModel.removeFromDock(app)
+                        viewModel.removeFromDock(app)
                         } else {
                             viewModel.addToDock(app)
                         }
@@ -458,7 +463,8 @@ private fun HomeTopRow(
     }
 }
 
-// ── Search pill ─────────────────────────────────────────────────────────────────
+// ── Search pill ────────────────────
+─────────────────────────────────────────────
 
 @Composable
 private fun SearchPill(
@@ -522,7 +528,8 @@ private fun BoxScope.NazeSheet(
     Box(
             Modifier.fillMaxSize()
             .background(scrimColor)
-                .clickable(interactionSource = interaction, indication = null, onClick = onDismiss)
+                .
+clickable(interactionSource = interaction, indication = null, onClick = onDismiss)
         )
     }
     AnimatedVisibility(
@@ -570,7 +577,8 @@ private fun QuickActionsContent(
         QuickActionTileData(NazeIcons.Bluetooth, "Bluetooth", active = false) { onSystemAction(SystemIntent.BLUETOOTH_SETTINGS, null) }
 ,
         QuickActionTileData(NazeIcons.Bell, "Notifs", active = false, onClick = onExpandNotifications),
-        QuickActionTileData(NazeIcons.Wallpaper, "Wallpaper", active = false) { onSystemAction(SystemIntent.WALLPAPER_PICKER, null) },
+        QuickActionTileData(NazeIcons
+.Wallpaper, "Wallpaper", active = false) { onSystemAction(SystemIntent.WALLPAPER_PICKER, null) },
         QuickActionTileData(NazeIcons.Info, "Device", active = false, onClick = onOpenDeviceInfo),
         QuickActionTileData(NazeIcons.Settings, "Settings", active = false, onClick = onOpenSettings)
     )
@@ -589,7 +597,7 @@ private fun QuickActionsContent(
 }
 
 private data class QuickActionTileData(
-    val icon: androidx.compose.ui.graphics.ImageVector,
+    val icon: androidx.compose.ui.graphics.vector.ImageVector,
     val label: String,
     val active: Boolean,
     val onClick: () -> Unit
@@ -627,7 +635,8 @@ private fun QuickActionTile(
         Spacer(Modifier.height(8.dp))
         Text(
             text = tile.label,
-            color = if (tile.active) accent else textColor.copy(alpha = 0.75f),
+            color = if (tile.active) accent else textColor.copy
+(alpha = 0.75f),
             fontSize = 12.sp,
             fontWeight = FontWeight.Medium,
             fontFamily = LocalNazeUiFont.current,
@@ -686,7 +695,8 @@ private fun DeviceInfoContent(
 }
 
 @Composable
-private fun InfoRow(label: String, value: String, textColor: Color) {
+private fun
+ InfoRow(label: String, value: String, textColor: Color) {
     Row(
         modifier = Modifier.fillMaxWidth()
             .padding(vertical = 11.dp),
@@ -771,7 +781,7 @@ private fun AppActionsContent(
 
 @Composable
 private fun SheetActionRow(
-    icon: androidx.compose.ui.graphics.ImageVector,
+    icon: androidx.compose.ui.graphics.vector.ImageVector,
     label: String,
     textColor: Color,
     accent: Color,

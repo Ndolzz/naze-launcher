@@ -34,14 +34,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ImageVector
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.graphics.drawable.toBitmap
 import com.naze.launcher.appdrawer.AppInfo
-import com.naze.launcher.theme.LocalNazeUiFont
+import com.naze.launcher.theme.LocalNazeUiFon
+t
 import com.naze.launcher.ui.EmptyState
 import com.naze.launcher.ui.NazeIcons
 import com.naze.launcher.ui.SearchField
@@ -106,7 +107,8 @@ fun QuickSearchScreen(
             textColor = textColor,
     
 
-        fontSize = 17.sp,
+        fontSize = 17.sp
+,
             autoFocus = true,
 
             modifier = Modifier.focusRequester(focusRequester)
@@ -157,7 +159,8 @@ fun QuickSearchScreen(
 )
 ) {
                         item {
-                     
+    
+                 
        SectionLabel("ACTIONS", textColor)
                         }
                         items(matchedActions, key = { it.title }) { action ->
